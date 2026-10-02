@@ -14,7 +14,7 @@ export function PrivateNav() {
         <Link href="/private-events/#trasformazione">Trasformazione</Link>
         <Link href="/private-events/#gallery">Gallery</Link>
         <Link className={styles.navCta} href="/private-events/#brief">
-          Raccontaci l'evento
+          Raccontaci l’evento
         </Link>
       </div>
     </nav>
