@@ -34,5 +34,8 @@
     "eslint-config-next": "latest",
     "tailwindcss": "latest",
     "typescript": "latest"
+  },
+  "engines": {
+    "node": ">=22.12.0"
   }
 }
