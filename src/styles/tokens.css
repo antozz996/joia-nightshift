@@ -1,0 +1,127 @@
+:root {
+  /* Geometry */
+  --content-max: 90rem;
+  --copy-max: 42rem;
+  --gutter: clamp(1rem, 3vw, 3rem);
+  --header-height: 4.5rem;
+  --section-space: clamp(5rem, 11vw, 10rem);
+
+  /* Fluid type */
+  --text-xs: clamp(0.72rem, 0.68rem + 0.12vw, 0.8rem);
+  --text-sm: clamp(0.86rem, 0.81rem + 0.16vw, 0.96rem);
+  --text-base: clamp(1rem, 0.95rem + 0.2vw, 1.125rem);
+  --text-lg: clamp(1.2rem, 1.05rem + 0.45vw, 1.5rem);
+  --text-xl: clamp(1.65rem, 1.25rem + 1.4vw, 2.6rem);
+  --text-2xl: clamp(2.5rem, 1.45rem + 4.6vw, 6.8rem);
+  --text-hero: clamp(4rem, 1.3rem + 10.4vw, 12.5rem);
+  --text-night-hero: clamp(5rem, 1.1rem + 13vw, 15rem);
+
+  /* Motion contract */
+  --ease-private: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-night: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-switch: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 180ms;
+  --dur-ui: 320ms;
+  --dur-scene: 900ms;
+  --dur-private: 1200ms;
+
+  /* Neutral */
+  --black: #080906;
+  --white: #f7f5ee;
+  --focus: #d7ff00;
+
+  /* Private world */
+  --private-bg: #f3eee4;
+  --private-surface: #e7dccb;
+  --private-surface-deep: #d8c9b4;
+  --private-text: #1b1712;
+  --private-muted: #74685a;
+  --private-champagne: #d6bd96;
+  --private-bronze: #93623e;
+  --private-line: rgba(27, 23, 18, 0.18);
+
+  /* Night world: exactly one chromatic accent */
+  --night-bg: #070806;
+  --night-surface: #11130f;
+  --night-surface-raised: #171a14;
+  --night-text: #e9ece1;
+  --night-muted: #9ba08f;
+  --night-acid: #d7ff00;
+  --night-line: rgba(233, 236, 225, 0.18);
+
+  /* Real-time atmospheric contract */
+  --sky-dawn: #d8cab6;
+  --sky-day: #f3eee4;
+  --sky-golden: #bf8758;
+  --sky-night: #10120f;
+  --sky-deep: #070806;
+  --ambient-bg: var(--sky-deep);
+  --ambient-text: var(--white);
+  --ambient-muted: #9ba08f;
+  --ambient-glow: var(--night-acid);
+  --ambient-progress: 0;
+
+  /* Media */
+  --grain-opacity-private: 0.055;
+  --grain-opacity-night: 0.1;
+  --media-private-saturate: 0.72;
+  --media-private-contrast: 1.06;
+  --media-private-brightness: 1.02;
+  --media-night-saturate: 0.46;
+  --media-night-contrast: 1.26;
+  --media-night-brightness: 0.84;
+
+  /* Layering */
+  --z-base: 0;
+  --z-media: 10;
+  --z-content: 20;
+  --z-header: 60;
+  --z-cursor: 80;
+  --z-transition: 100;
+  --z-consent: 120;
+}
+
+[data-world="private"] {
+  --page-bg: var(--private-bg);
+  --page-text: var(--private-text);
+  --page-muted: var(--private-muted);
+  --page-accent: var(--private-bronze);
+  --page-line: var(--private-line);
+  --page-ease: var(--ease-private);
+}
+
+[data-world="night"] {
+  --page-bg: var(--night-bg);
+  --page-text: var(--night-text);
+  --page-muted: var(--night-muted);
+  --page-accent: var(--night-acid);
+  --page-line: var(--night-line);
+  --page-ease: var(--ease-night);
+}
+
+[data-world="neutral"] {
+  --page-bg: var(--black);
+  --page-text: var(--white);
+  --page-muted: #b2b4aa;
+  --page-accent: var(--night-acid);
+  --page-line: rgba(247, 245, 238, 0.18);
+  --page-ease: var(--ease-switch);
+}
+
+[data-world="switch"] {
+  --page-bg: var(--ambient-bg);
+  --page-text: var(--ambient-text);
+  --page-muted: var(--ambient-muted);
+  --page-accent: var(--ambient-glow);
+  --page-line: color-mix(in srgb, var(--ambient-text) 20%, transparent);
+  --page-ease: var(--ease-switch);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 0ms;
+    --dur-ui: 0ms;
+    --dur-scene: 0ms;
+    --dur-private: 0ms;
+  }
+}
