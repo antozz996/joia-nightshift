@@ -1,0 +1,38 @@
+{
+  "name": "joia-nightshift",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "studio": "sanity dev",
+    "studio:build": "sanity build"
+  },
+  "dependencies": {
+    "@sanity/image-url": "latest",
+    "@sanity/vision": "latest",
+    "gsap": "latest",
+    "lenis": "latest",
+    "motion": "latest",
+    "next": "latest",
+    "next-sanity": "latest",
+    "ogl": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "sanity": "latest",
+    "zod": "latest"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "latest",
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "eslint": "latest",
+    "eslint-config-next": "latest",
+    "tailwindcss": "latest",
+    "typescript": "latest"
+  }
+}
