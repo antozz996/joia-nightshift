@@ -1,0 +1,48 @@
+import Link from "next/link";
+import styles from "./PrivateWorld.module.css";
+
+type PrivateHeroProps = {
+  eyebrow?: string;
+  title: string;
+  intro: string;
+  ctaHref?: string;
+  ctaLabel?: string;
+  secondaryHref?: string;
+  secondaryLabel?: string;
+  showHistory?: boolean;
+};
+
+export function PrivateHero({
+  eyebrow = "JOIA / Private Events",
+  title,
+  intro,
+  ctaHref = "#brief",
+  ctaLabel = "Inizia il brief",
+  secondaryHref = "#formati",
+  secondaryLabel = "Esplora i formati",
+  showHistory = true,
+}: PrivateHeroProps) {
+  return (
+    <section className={styles.hero}>
+      <div className={styles.heroCopy} data-private-reveal>
+        <p className={styles.eyebrow}>{eyebrow}</p>
+        <h1 className={styles.heroTitle}>{title}</h1>
+        <p className={styles.heroIntro}>{intro}</p>
+
+        <div className={styles.heroActions}>
+          <Link className={styles.primaryButton} href={ctaHref}>
+            {ctaLabel}
+          </Link>
+          <Link className={styles.secondaryButton} href={secondaryHref}>
+            {secondaryLabel}
+          </Link>
+        </div>
+      </div>
+
+      <div className={styles.heroVisual} aria-hidden="true" data-private-parallax>
+        <div className={styles.heroArch} />
+        {showHistory ? <p className={styles.heroNumber}>20+</p> : null}
+      </div>
+    </section>
+  );
+}
