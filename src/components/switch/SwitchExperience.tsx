@@ -55,9 +55,8 @@ export function SwitchExperience() {
   });
 
   useEffect(() => {
-    setMix(phaseToMix());
-
-    const updateClock = () => {
+    const syncVenueState = () => {
+      setMix(phaseToMix());
       setClock(
         new Intl.DateTimeFormat("it-IT", {
           timeZone: "Europe/Rome",
@@ -68,9 +67,13 @@ export function SwitchExperience() {
       );
     };
 
-    updateClock();
-    const interval = window.setInterval(updateClock, 60_000);
-    return () => window.clearInterval(interval);
+    const firstFrame = window.requestAnimationFrame(syncVenueState);
+    const interval = window.setInterval(syncVenueState, 60_000);
+
+    return () => {
+      window.cancelAnimationFrame(firstFrame);
+      window.clearInterval(interval);
+    };
   }, []);
 
   const cssVars = useMemo(
