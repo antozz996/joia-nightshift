@@ -24,26 +24,22 @@ export function SwitchMediaStage({ mix, pointer }: SwitchMediaStageProps) {
     let timeout = 0;
     let idleId: number | undefined;
     const activate = () => setShaderReady(true);
+    const browserWindow = window as Window & {
+      requestIdleCallback?: (callback: IdleRequestCallback, options?: IdleRequestOptions) => number;
+      cancelIdleCallback?: (handle: number) => void;
+    };
 
-    if ("requestIdleCallback" in window) {
-      idleId = (
-        window as Window & {
-          requestIdleCallback: (callback: IdleRequestCallback, options?: IdleRequestOptions) => number;
-        }
-      ).requestIdleCallback(activate, { timeout: 1400 });
+    if (typeof browserWindow.requestIdleCallback === "function") {
+      idleId = browserWindow.requestIdleCallback(activate, { timeout: 1400 });
     } else {
-      timeout = window.setTimeout(activate, 650);
+      timeout = browserWindow.setTimeout(activate, 650);
     }
 
     return () => {
-      if (idleId !== undefined && "cancelIdleCallback" in window) {
-        (
-          window as Window & {
-            cancelIdleCallback: (handle: number) => void;
-          }
-        ).cancelIdleCallback(idleId);
+      if (idleId !== undefined && typeof browserWindow.cancelIdleCallback === "function") {
+        browserWindow.cancelIdleCallback(idleId);
       }
-      if (timeout) window.clearTimeout(timeout);
+      if (timeout) browserWindow.clearTimeout(timeout);
     };
   }, []);
 
