@@ -103,7 +103,7 @@ export function SwitchShaderCanvas({ mix, pointer }: SwitchShaderCanvasProps) {
       uniforms: {
         uTime: { value: 0 },
         uMix: { value: mixRef.current },
-        uPointer: { value: [pointerRef.current.x, pointerRef.current.y] },
+        uPointer: { value: [pointerRef.current.x, 1 - pointerRef.current.y] },
         uResolution: { value: [1, 1] },
       },
     });
@@ -129,7 +129,7 @@ export function SwitchShaderCanvas({ mix, pointer }: SwitchShaderCanvasProps) {
 
       const currentPointer = program.uniforms.uPointer.value as number[];
       currentPointer[0] += (pointerRef.current.x - currentPointer[0]) * 0.08;
-      currentPointer[1] += (pointerRef.current.y - currentPointer[1]) * 0.08;
+      currentPointer[1] += (1 - pointerRef.current.y - currentPointer[1]) * 0.08;
 
       renderer.render({ scene: mesh });
       frame = requestAnimationFrame(render);
