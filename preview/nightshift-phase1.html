@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>JOIA — NIGHTSHIFT / Phase 1</title>
+<meta name="description" content="JOIA NIGHTSHIFT — design system preview. Due atmosfere, un solo JOIA.">
+<style>
+:root{--bg:#070806;--fg:#f4f2ea;--muted:#9ba08f;--acid:#d7ff00;--warm:#93623e;--ivory:#f3eee4;--mx:50%;--my:45%}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--fg);font-family:Arial,Helvetica,sans-serif}
+body{min-height:100svh;overflow-x:hidden;transition:background .9s cubic-bezier(.65,0,.35,1),color .9s cubic-bezier(.65,0,.35,1)}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(circle 26rem at var(--mx) var(--my),color-mix(in srgb,var(--accent) 18%,transparent),transparent 72%);transition:background .6s}
+body:after{content:"";position:fixed;inset:-40%;pointer-events:none;z-index:10;opacity:.045;mix-blend-mode:soft-light;background-image:radial-gradient(circle,#fff 0 .6px,transparent .9px),radial-gradient(circle,#000 0 .7px,transparent 1px);background-size:7px 7px,11px 11px;animation:grain .28s steps(2) infinite}
+@keyframes grain{0%{transform:translate(-2%,-1%)}50%{transform:translate(2%,-2%)}100%{transform:translate(-2%,-1%)}}
+.wrap{position:relative;z-index:2;min-height:100svh;display:grid;grid-template-rows:auto 1fr auto;padding:24px clamp(18px,4vw,56px)}
+header,footer{display:flex;align-items:center;justify-content:space-between;gap:20px;font:600 11px/1.2 "Courier New",monospace;letter-spacing:.12em;text-transform:uppercase}
+header{padding-top:max(4px,env(safe-area-inset-top))}.dot{display:inline-block;width:8px;height:8px;background:var(--accent);border-radius:50%;margin-right:10px;box-shadow:0 0 22px var(--accent)}
+main{display:grid;align-content:center;gap:clamp(26px,5vh,54px);padding:8vh 0}
+.kicker{font:500 11px/1 "Courier New",monospace;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+h1{margin:0;max-width:9ch;font-family:"Arial Narrow",Impact,sans-serif;font-size:clamp(64px,12vw,180px);line-height:.78;letter-spacing:-.06em;text-transform:uppercase}
+.sub{max-width:620px;margin:0;color:var(--muted);font-size:clamp(15px,1.5vw,20px);line-height:1.5}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;max-width:1100px}
+.card{position:relative;min-height:220px;padding:24px;border:1px solid color-mix(in srgb,var(--fg) 18%,transparent);text-decoration:none;color:inherit;overflow:hidden;display:grid;align-content:space-between;transition:transform .35s cubic-bezier(.16,1,.3,1),background .35s,color .35s,border-color .35s}
+.card:hover{transform:translateY(-5px)}.card small{font:500 10px/1 "Courier New",monospace;letter-spacing:.14em;text-transform:uppercase}
+.card strong{font-size:clamp(36px,6vw,76px);line-height:.82;letter-spacing:-.05em}
+.private{background:linear-gradient(145deg,rgba(243,238,228,.08),rgba(147,98,62,.04))}.private:hover{background:var(--ivory);color:#1b1712;border-color:var(--ivory)}
+.night{background:linear-gradient(145deg,rgba(215,255,0,.03),transparent)}.night:hover{background:var(--acid);color:#070806;border-color:var(--acid)}
+.meta{display:flex;gap:10px;flex-wrap:wrap}.pill{border:1px solid color-mix(in srgb,var(--fg) 18%,transparent);padding:8px 10px;font:500 10px/1 "Courier New",monospace;letter-spacing:.08em;text-transform:uppercase}
+.time{font-variant-numeric:tabular-nums}
+@media(max-width:720px){.wrap{padding:18px}.grid{grid-template-columns:1fr}.card{min-height:170px}main{align-content:end;padding:16vh 0 4vh}h1{font-size:clamp(58px,20vw,104px)}footer{align-items:flex-end;flex-direction:column-reverse}.meta{display:none}}
+@media(prefers-reduced-motion:reduce){body:after{animation:none}.card{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><div><span class="dot"></span>JOIA / NIGHTSHIFT</div><div class="time" id="clock">NAPOLI — --:--</div></header>
+<main>
+<div>
+<div class="kicker">Concept 02 / Design System / Phase 1</div>
+<h1>Due atmosfere.<br>Un solo JOIA.</h1>
+</div>
+<p class="sub">Il sito cambia con l'ora reale di Napoli. Private Events vive nella luce calda; FORMĀ entra nella densità della notte. Questa è la base visuale già caricata nel repository definitivo.</p>
+<div class="grid">
+<a class="card private" href="#private"><small>01 / Private Events</small><strong>La sala<br>cambia.</strong><small>Avorio · Champagne · Bronzo ↗</small></a>
+<a class="card night" href="#nightlife"><small>02 / FORMĀ</small><strong>La notte<br>accende.</strong><small>Deep black · Acid chartreuse ↗</small></a>
+</div>
+<div class="meta"><span class="pill">Europe/Rome time engine</span><span class="pill">Video → Photo → Generative</span><span class="pill">Reduced motion ready</span><span class="pill">Vertical first</span></div>
+</main>
+<footer><span>EST. 2004 / NAPOLI</span><span>NIGHTSHIFT — PREVIEW FASE 1</span></footer>
+</div>
+<script>
+const root=document.documentElement,clock=document.getElementById('clock');
+const frames=[
+[0,'#070806','#f4f2ea','#9ba08f','#d7ff00'],[300,'#070806','#f4f2ea','#9ba08f','#d7ff00'],
+[390,'#d8cab6','#211c16','#786b5c','#f0c99b'],[570,'#f3eee4','#1b1712','#74685a','#d6bd96'],
+[990,'#f3eee4','#1b1712','#74685a','#d6bd96'],[1140,'#bf8758','#17120e','#4f3928','#f1c98e'],
+[1245,'#10120f','#eceee6','#9ba08f','#d7ff00'],[1410,'#070806','#f4f2ea','#9ba08f','#d7ff00'],[1440,'#070806','#f4f2ea','#9ba08f','#d7ff00']];
+function rgb(h){h=h.slice(1);return[0,2,4].map(i=>parseInt(h.slice(i,i+2),16))}
+function hex(a){return'#'+a.map(v=>Math.round(v).toString(16).padStart(2,'0')).join('')}
+function mix(a,b,t){a=rgb(a);b=rgb(b);return hex(a.map((v,i)=>v+(b[i]-v)*t))}
+function update(){
+ const p=new Intl.DateTimeFormat('it-IT',{timeZone:'Europe/Rome',hour:'2-digit',minute:'2-digit',hour12:false}).formatToParts(new Date());
+ const h=+p.find(x=>x.type==='hour').value,m=+p.find(x=>x.type==='minute').value,n=h*60+m;
+ let i=frames.findIndex(f=>f[0]>=n);if(i<1)i=1;const a=frames[i-1],b=frames[i],t=(n-a[0])/Math.max(1,b[0]-a[0]);
+ root.style.setProperty('--bg',mix(a[1],b[1],t));root.style.setProperty('--fg',mix(a[2],b[2],t));root.style.setProperty('--muted',mix(a[3],b[3],t));root.style.setProperty('--accent',mix(a[4],b[4],t));
+ clock.textContent='NAPOLI — '+String(h).padStart(2,'0')+':'+String(m).padStart(2,'0');
+}
+update();setInterval(update,60000);
+addEventListener('pointermove',e=>{root.style.setProperty('--mx',e.clientX+'px');root.style.setProperty('--my',e.clientY+'px')},{passive:true});
+</script>
+</body>
+</html>
