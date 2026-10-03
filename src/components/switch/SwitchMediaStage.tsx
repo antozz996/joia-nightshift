@@ -19,7 +19,14 @@ export function SwitchMediaStage({ mix, pointer }: SwitchMediaStageProps) {
 
   useEffect(() => {
     const capability = getPreferredVisualCapability();
-    if (capability !== "full") return;
+    const coarse = window.matchMedia("(pointer: coarse)").matches;
+    const compact = window.matchMedia("(max-width: 900px)").matches;
+    const touchDevice = navigator.maxTouchPoints > 0;
+
+    if (capability !== "full" || coarse || compact || touchDevice) {
+      setShaderReady(false);
+      return;
+    }
 
     let timeout = 0;
     let idleId: number | undefined;
