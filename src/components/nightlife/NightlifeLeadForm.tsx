@@ -2,6 +2,11 @@
 
 import { useMemo, useState } from "react";
 import type { NightlifeLeadKind } from "@/lib/nightlife/lead";
+import {
+  dispatchConversion,
+  getAttribution,
+  marketingConsentHeader,
+} from "@/lib/tracking/client";
 import styles from "./NightWorld.module.css";
 
 type SubmitResult = {
@@ -50,7 +55,10 @@ export function NightlifeLeadForm({
     try {
       const response = await fetch("/api/nightlife-lead", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "x-joia-marketing-consent": marketingConsentHeader(),
+        },
         body: JSON.stringify({
           kind,
           name,
@@ -61,6 +69,7 @@ export function NightlifeLeadForm({
           channel,
           message,
           website,
+          attribution: getAttribution(),
         }),
       });
 
@@ -70,11 +79,17 @@ export function NightlifeLeadForm({
         whatsappUrl?: string;
         emailFallback?: string;
         error?: string;
+        eventId?: string;
       };
 
       if (!response.ok || !data.ok) {
         throw new Error(data.error ?? "Invio non riuscito.");
       }
+
+      dispatchConversion("lead", data.eventId, {
+        lead_type: kind,
+        event,
+      });
 
       setResult({
         sent: Boolean(data.sent),
