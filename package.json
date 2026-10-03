@@ -9,7 +9,8 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "studio": "sanity dev",
-    "studio:build": "sanity build"
+    "studio:build": "sanity build",
+    "performance:check": "node scripts/check-performance.mjs"
   },
   "dependencies": {
     "@sanity/image-url": "latest",
