@@ -1,5 +1,5 @@
 import { siteConfig } from "@/config/site";
-import type { NightEventRecord } from "@/lib/cms/nightlife";
+import type { NightArtistRecord, NightEventRecord } from "@/lib/cms/nightlife";
 import { absoluteUrl } from "./site-url";
 
 export function venueSchema() {
@@ -35,6 +35,7 @@ export function musicEventSchema(event: NightEventRecord) {
     eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
     location: {
       "@type": "EventVenue",
+      "@id": absoluteUrl("/#venue"),
       name: siteConfig.name,
       address: {
         "@type": "PostalAddress",
@@ -45,10 +46,19 @@ export function musicEventSchema(event: NightEventRecord) {
         addressCountry: "IT",
       },
     },
+    organizer: {
+      "@type": "Organization",
+      name: siteConfig.name,
+      url: absoluteUrl("/"),
+    },
     url: absoluteUrl("/eventi/" + event.slug + "/"),
   };
 
-  if (event.subtitle) schema.description = event.subtitle;
+  const image = event.seo?.imageUrl ?? event.posterUrl;
+  if (image) schema.image = [image];
+
+  const description = event.seo?.description ?? event.seoDescription ?? event.subtitle;
+  if (description) schema.description = description;
 
   if (event.artists?.length) {
     schema.performer = event.artists.map((artist) => ({
@@ -63,8 +73,26 @@ export function musicEventSchema(event: NightEventRecord) {
       "@type": "Offer",
       url: event.ticketUrl,
       availability: "https://schema.org/InStock",
+      validFrom: event.updatedAt,
     };
   }
+
+  return schema;
+}
+
+export function artistSchema(artist: NightArtistRecord) {
+  const schema: Record<string, unknown> = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: artist.name,
+    url: absoluteUrl("/artisti/" + artist.slug + "/"),
+  };
+
+  if (artist.bio) schema.description = artist.bio;
+  if (artist.portraitUrl) schema.image = artist.portraitUrl;
+  if (artist.country) schema.nationality = artist.country;
+  if (artist.genres?.length) schema.knowsAbout = artist.genres;
+  if (artist.instagram) schema.sameAs = [artist.instagram];
 
   return schema;
 }
