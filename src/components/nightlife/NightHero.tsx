@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { getNextNightEvent } from "@/lib/cms/nightlife";
 import styles from "./NightWorld.module.css";
@@ -31,6 +32,15 @@ export async function NightHero() {
         </div>
 
         <article className={styles.nextCard} aria-label="Prossima serata">
+          <Image
+            className={styles.nextMedia}
+            src="/media/nightlife/forma-hero.jpg"
+            alt=""
+            fill
+            priority
+            sizes="(max-width: 900px) 100vw, 42vw"
+          />
+          <span className={styles.nextMediaShade} aria-hidden="true" />
           <div className={styles.nextTop}>
             <span className={styles.liveDot}>Next transmission</span>
             <span>JOIA / FORMĀ</span>
