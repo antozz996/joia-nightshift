@@ -5,12 +5,16 @@ import { PrivateConfigurator } from "@/components/private/PrivateConfigurator";
 import { PrivateGallery } from "@/components/private/PrivateGallery";
 import { PrivateHero } from "@/components/private/PrivateHero";
 import { PrivateTypeCards } from "@/components/private/PrivateTypeCards";
+import { FaqSection } from "@/components/seo/FaqSection";
+import { privateFaqs } from "@/content/faqs";
+import { localizedAlternates } from "@/lib/seo/site-url";
 import styles from "@/components/private/PrivateWorld.module.css";
 
 export const metadata: Metadata = {
   title: "Private Events a Napoli",
   description:
     "JOIA Private Events: uno spazio a Napoli che cambia intorno al tuo evento. Lauree, 18 anni, compleanni ed eventi aziendali.",
+  alternates: localizedAlternates("/private-events/", "/en/private-events/"),
 };
 
 export default function PrivateEventsPage() {
@@ -78,6 +82,8 @@ export default function PrivateEventsPage() {
         </div>
         <PrivateGallery />
       </section>
+
+      <FaqSection items={privateFaqs} world="private" />
 
       <section className={styles.section} id="brief">
         <div className={styles.briefShell}>
