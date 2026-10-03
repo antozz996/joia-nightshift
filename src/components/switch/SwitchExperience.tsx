@@ -43,6 +43,7 @@ export function SwitchExperience() {
   const [pointer, setPointer] = useState<PointerPosition>({ x: 0.5, y: 0.48 });
   const [clock, setClock] = useState("--:--");
   const [leaving, setLeaving] = useState(false);
+  const [touchMode, setTouchMode] = useState(false);
 
   const dragRef = useRef<DragState>({
     active: false,
@@ -53,6 +54,9 @@ export function SwitchExperience() {
     startMix: 0.5,
     moved: 0,
   });
+
+  const mixFrameRef = useRef(0);
+  const pendingMixRef = useRef<number | null>(null);
 
   useEffect(() => {
     const syncVenueState = () => {
@@ -76,6 +80,36 @@ export function SwitchExperience() {
     };
   }, []);
 
+  useEffect(() => {
+    const coarse = window.matchMedia("(pointer: coarse)");
+    const compact = window.matchMedia("(max-width: 767px)");
+
+    const syncInputMode = () => {
+      setTouchMode(
+        coarse.matches ||
+          compact.matches ||
+          navigator.maxTouchPoints > 0,
+      );
+    };
+
+    syncInputMode();
+    coarse.addEventListener("change", syncInputMode);
+    compact.addEventListener("change", syncInputMode);
+
+    return () => {
+      coarse.removeEventListener("change", syncInputMode);
+      compact.removeEventListener("change", syncInputMode);
+    };
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (mixFrameRef.current) {
+        window.cancelAnimationFrame(mixFrameRef.current);
+      }
+    };
+  }, []);
+
   const cssVars = useMemo(
     () =>
       ({
@@ -86,7 +120,21 @@ export function SwitchExperience() {
     [mix, pointer],
   );
 
+  const queueMix = (value: number) => {
+    pendingMixRef.current = value;
+    if (mixFrameRef.current) return;
+
+    mixFrameRef.current = window.requestAnimationFrame(() => {
+      mixFrameRef.current = 0;
+      if (pendingMixRef.current === null) return;
+      setMix(pendingMixRef.current);
+      pendingMixRef.current = null;
+    });
+  };
+
   const updatePointerPosition = (event: ReactPointerEvent<HTMLElement>) => {
+    if (touchMode || event.pointerType === "touch") return;
+
     const rect = event.currentTarget.getBoundingClientRect();
     setPointer({
       x: clamp((event.clientX - rect.left) / Math.max(rect.width, 1)),
@@ -96,7 +144,7 @@ export function SwitchExperience() {
 
   const navigate = (href: string) => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduced) {
+    if (reduced || touchMode) {
       router.push(href);
       return;
     }
@@ -118,20 +166,28 @@ export function SwitchExperience() {
       startMix: mix,
       moved: 0,
     };
+
     updatePointerPosition(event);
   };
 
   const onPointerMove = (event: ReactPointerEvent<HTMLElement>) => {
-    updatePointerPosition(event);
-
     const drag = dragRef.current;
+    const isTouch =
+      event.pointerType === "touch" ||
+      drag.pointerType === "touch" ||
+      touchMode;
+
+    if (!isTouch) {
+      updatePointerPosition(event);
+    }
+
     if (!drag.active || drag.pointerId !== event.pointerId) {
       if ((event.target as HTMLElement).closest("a")) return;
 
-      if (event.pointerType === "mouse") {
+      if (!isTouch && event.pointerType === "mouse") {
         const rect = event.currentTarget.getBoundingClientRect();
         const hoverMix = clamp((event.clientX - rect.left) / Math.max(rect.width, 1));
-        setMix((current) => current * 0.88 + hoverMix * 0.12);
+        queueMix(mix * 0.88 + hoverMix * 0.12);
       }
       return;
     }
@@ -140,14 +196,11 @@ export function SwitchExperience() {
     const dy = event.clientY - drag.startY;
     drag.moved = Math.max(drag.moved, Math.hypot(dx, dy));
 
-    const isTouch =
-      drag.pointerType === "touch" || window.matchMedia("(pointer: coarse)").matches;
-
     const delta = isTouch
-      ? -dy / Math.max(window.innerHeight * 0.55, 1)
+      ? -dy / Math.max(window.innerHeight * 0.68, 1)
       : dx / Math.max(window.innerWidth * 0.55, 1);
 
-    setMix(clamp(drag.startMix + delta));
+    queueMix(clamp(drag.startMix + delta));
   };
 
   const finishDrag = (event: ReactPointerEvent<HTMLElement>) => {
@@ -157,17 +210,25 @@ export function SwitchExperience() {
     drag.active = false;
     drag.pointerId = null;
 
-    const target = mix >= 0.5 ? 1 : 0;
+    const isTouch =
+      drag.pointerType === "touch" ||
+      touchMode;
 
-    if (drag.moved > 48) {
-      setMix(target);
+    const dx = event.clientX - drag.startX;
+    const dy = event.clientY - drag.startY;
+    const finalMix = clamp(
+      drag.startMix +
+        (isTouch
+          ? -dy / Math.max(window.innerHeight * 0.68, 1)
+          : dx / Math.max(window.innerWidth * 0.55, 1)),
+    );
 
-      if (drag.pointerType === "touch" && drag.moved > 95) {
-        navigate(target === 1 ? "/nightlife/" : "/private-events/");
-      }
-    } else {
-      setMix(target === 1 ? 0.82 : 0.18);
+    if (drag.moved > 34) {
+      setMix(finalMix >= 0.5 ? 0.94 : 0.06);
+      return;
     }
+
+    setMix(finalMix >= 0.5 ? 0.82 : 0.18);
   };
 
   const intercept =
@@ -196,6 +257,7 @@ export function SwitchExperience() {
       onPointerUp={finishDrag}
       onPointerCancel={finishDrag}
       data-world="switch"
+      data-input={touchMode ? "touch" : "pointer"}
       aria-label="Scegli l'esperienza JOIA"
     >
       <div className={styles.media}>
@@ -240,7 +302,9 @@ export function SwitchExperience() {
           <Link
             href="/private-events/"
             className={styles.choice + " " + styles.choicePrivate}
-            onPointerEnter={() => setMix(0.06)}
+            onPointerEnter={() => {
+              if (!touchMode) setMix(0.06);
+            }}
             onFocus={() => setMix(0.06)}
             onClick={intercept("/private-events/")}
           >
@@ -254,7 +318,9 @@ export function SwitchExperience() {
           <Link
             href="/nightlife/"
             className={styles.choice + " " + styles.choiceNight}
-            onPointerEnter={() => setMix(0.94)}
+            onPointerEnter={() => {
+              if (!touchMode) setMix(0.94);
+            }}
             onFocus={() => setMix(0.94)}
             onClick={intercept("/nightlife/")}
           >
@@ -273,7 +339,9 @@ export function SwitchExperience() {
       </div>
 
       <div className={styles.dragHint} aria-hidden="true">
-        Desktop: trascina · Mobile: scorri ↑↓ o tocca
+        {touchMode
+          ? "Scorri ↑↓ per cambiare · tocca per entrare"
+          : "Desktop: trascina · passa sulle scelte"}
       </div>
     </main>
   );
