@@ -63,3 +63,21 @@
   align-items: center;
   font-size: .7rem;
 }
+
+.settingsButton {
+  position: fixed;
+  z-index: 135;
+  left: max(.7rem, env(safe-area-inset-left));
+  bottom: max(.7rem, env(safe-area-inset-bottom));
+  min-height: 2.2rem;
+  padding: .5rem .65rem;
+  border: 1px solid rgba(233,236,225,.16);
+  background: rgba(7,8,6,.76);
+  color: #c7cbbd;
+  backdrop-filter: blur(12px);
+  cursor: pointer;
+  font-family: var(--font-night-mono), monospace;
+  font-size: .58rem;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
