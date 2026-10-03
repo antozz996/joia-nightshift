@@ -940,3 +940,67 @@
     transition: none;
   }
 }
+
+
+/* Curated real FORMĀ media — Drive review 2026-10-03 */
+.nextMedia {
+  object-fit: cover;
+  object-position: center;
+  filter: saturate(.72) contrast(1.15) brightness(.58);
+  transform: scale(1.02);
+}
+
+.nextMediaShade {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 72% 20%, rgba(215,255,0,.08), transparent 24rem),
+    linear-gradient(180deg, rgba(7,8,6,.12), rgba(7,8,6,.72) 72%, rgba(7,8,6,.9));
+}
+
+.nextCard::before {
+  z-index: 2;
+}
+
+.leadIntro::before {
+  content: "";
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  margin-bottom: 1.4rem;
+  border: 1px solid rgba(233,236,225,.12);
+  background:
+    linear-gradient(180deg, rgba(7,8,6,.08), rgba(7,8,6,.46)),
+    url("/media/nightlife/forma-community.jpg") center 52% / cover no-repeat;
+  filter: saturate(.72) contrast(1.12);
+}
+
+
+.flyerImage {
+  object-fit: cover;
+  object-position: center;
+  filter: saturate(.68) contrast(1.12) brightness(.72);
+  transition: transform 420ms var(--ease-night), filter 260ms ease;
+}
+
+.flyer:hover .flyerImage {
+  transform: scale(1.035);
+  filter: saturate(.82) contrast(1.14) brightness(.8);
+}
+
+.flyerShade {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(7,8,6,.14), rgba(7,8,6,.72)),
+    linear-gradient(120deg, transparent 55%, rgba(215,255,0,.06));
+}
+
+.flyer > span,
+.flyer > strong {
+  z-index: 2;
+}

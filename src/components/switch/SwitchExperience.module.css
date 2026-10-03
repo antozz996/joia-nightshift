@@ -430,3 +430,35 @@
     animation: none;
   }
 }
+
+
+/* Real JOIA texture over the procedural Switch; shader remains the light engine. */
+.media :global(.nightshift-switch-media-stage)::before,
+.media :global(.nightshift-switch-media-stage)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background-size: cover;
+  background-position: center;
+  transition: opacity 520ms var(--ease-switch);
+}
+
+.media :global(.nightshift-switch-media-stage)::before {
+  background-image:
+    linear-gradient(110deg, rgba(243,238,228,.12), rgba(147,98,62,.12)),
+    url("/media/private/hero-dinner.jpg");
+  opacity: calc((1 - var(--switch-mix)) * .42);
+  filter: saturate(.7) sepia(.08);
+  mix-blend-mode: soft-light;
+}
+
+.media :global(.nightshift-switch-media-stage)::after {
+  background-image:
+    linear-gradient(110deg, rgba(7,8,6,.15), rgba(215,255,0,.04)),
+    url("/media/nightlife/forma-hero.jpg");
+  opacity: calc(var(--switch-mix) * .48);
+  filter: saturate(.62) contrast(1.1);
+  mix-blend-mode: luminosity;
+}
