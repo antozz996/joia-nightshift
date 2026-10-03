@@ -3,6 +3,11 @@
 import { useMemo, useState } from "react";
 import { privateEventTypes } from "@/content/private-events";
 import { budgetOptions } from "@/lib/private/brief";
+import {
+  dispatchConversion,
+  getAttribution,
+  marketingConsentHeader,
+} from "@/lib/tracking/client";
 import styles from "./PrivateWorld.module.css";
 
 type FormData = {
@@ -83,7 +88,10 @@ export function PrivateBriefForm({ initialEventType = "" }: { initialEventType?:
     try {
       const response = await fetch("/api/private-brief", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "x-joia-marketing-consent": marketingConsentHeader(),
+        },
         body: JSON.stringify({
           eventType: form.eventType,
           people: Number(form.people),
@@ -94,6 +102,7 @@ export function PrivateBriefForm({ initialEventType = "" }: { initialEventType?:
           phone: form.phone,
           message: form.message,
           website: form.website,
+          attribution: getAttribution(),
         }),
       });
 
@@ -103,11 +112,17 @@ export function PrivateBriefForm({ initialEventType = "" }: { initialEventType?:
         whatsappUrl?: string;
         emailFallback?: string;
         error?: string;
+        eventId?: string;
       };
 
       if (!response.ok || !data.ok) {
         throw new Error(data.error ?? "Invio non riuscito.");
       }
+
+      dispatchConversion("lead", data.eventId, {
+        lead_type: "private_brief",
+        event_type: form.eventType,
+      });
 
       setResult({
         sent: Boolean(data.sent),
