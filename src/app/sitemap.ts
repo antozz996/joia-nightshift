@@ -96,9 +96,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.8,
   }));
 
-  const staticPrivateSlugs = new Set(privateEventTypes.map((item) => item.slug));
+  const staticPrivateSlugs = new Set<string>(privateEventTypes.map((item) => item.slug));
   const cmsPrivatePages: MetadataRoute.Sitemap = cmsPrivateTypes
-    .filter((item) => !item.seo?.noIndex && !staticPrivateSlugs.has(item.slug as never))
+    .filter((item) => !item.seo?.noIndex && !staticPrivateSlugs.has(item.slug))
     .map((item) => ({
       url: absoluteUrl("/private-events/" + item.slug + "/"),
       lastModified: item.updatedAt ? new Date(item.updatedAt) : now,
