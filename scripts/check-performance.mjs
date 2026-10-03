@@ -5,13 +5,13 @@ import zlib from "node:zlib";
 const NEXT_DIR = path.resolve(".next");
 const BUDGET_BYTES = 200 * 1024;
 
-function findFiles(directory, target, results = []) {
+function walk(directory, predicate, results = []) {
   if (!fs.existsSync(directory)) return results;
 
   for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
     const full = path.join(directory, entry.name);
-    if (entry.isDirectory()) findFiles(full, target, results);
-    else if (entry.name === target) results.push(full);
+    if (entry.isDirectory()) walk(full, predicate, results);
+    else if (predicate(full, entry.name)) results.push(full);
   }
 
   return results;
@@ -19,6 +19,7 @@ function findFiles(directory, target, results = []) {
 
 function resolveChunk(file) {
   const normalized = file
+    .split("?")[0]
     .replace(/^\/_next\//, "")
     .replace(/^_next\//, "")
     .replace(/^\/+/, "");
@@ -31,44 +32,83 @@ function resolveChunk(file) {
   return candidates.find((candidate) => fs.existsSync(candidate));
 }
 
-const manifests = findFiles(NEXT_DIR, "app-build-manifest.json");
+function filesFromPrerenderedHtml() {
+  const appDir = path.join(NEXT_DIR, "server", "app");
+  const htmlFiles = walk(appDir, (_full, name) => name.endsWith(".html"));
 
-if (!manifests.length) {
-  console.error("Performance budget: app-build-manifest.json not found.");
-  process.exit(1);
+  const preferred =
+    htmlFiles.find((file) => file.endsWith(path.join("app", "page.html"))) ??
+    htmlFiles.find((file) => /(^|[/\\])index\.html$/.test(file)) ??
+    htmlFiles[0];
+
+  if (!preferred) return [];
+
+  const html = fs.readFileSync(preferred, "utf8");
+  const matches = [
+    ...html.matchAll(/(?:src|href)=["']([^"']+\.js(?:\?[^"']*)?)["']/g),
+  ];
+
+  return matches.map((match) => match[1]);
 }
 
-let rootFiles = [];
+function filesFromBuildManifest() {
+  const manifests = walk(
+    NEXT_DIR,
+    (_full, name) =>
+      name === "app-build-manifest.json" || name === "build-manifest.json",
+  );
 
-for (const manifestPath of manifests) {
-  const manifest = JSON.parse(fs.readFileSync(manifestPath, "utf8"));
-  const pages = manifest.pages ?? {};
-  const root =
-    pages["/page"] ??
-    pages["page"] ??
-    pages["app/page"] ??
-    pages["/(root)/page"];
+  for (const manifestPath of manifests) {
+    let manifest;
+    try {
+      manifest = JSON.parse(fs.readFileSync(manifestPath, "utf8"));
+    } catch {
+      continue;
+    }
 
-  if (Array.isArray(root) && root.length) {
-    rootFiles = root;
-    break;
+    const pages = manifest.pages ?? {};
+    const root =
+      pages["/page"] ??
+      pages["/"] ??
+      pages["page"] ??
+      pages["app/page"];
+
+    const shared = [
+      ...(manifest.rootMainFiles ?? []),
+      ...(manifest.polyfillFiles ?? []),
+      ...(manifest.lowPriorityFiles ?? []),
+    ];
+
+    const files = [
+      ...(Array.isArray(root) ? root : []),
+      ...shared,
+    ].filter((file) => typeof file === "string" && file.endsWith(".js"));
+
+    if (files.length) return files;
   }
+
+  return [];
 }
 
-if (!rootFiles.length) {
+const referencedFiles = filesFromPrerenderedHtml();
+const fallbackFiles = referencedFiles.length
+  ? referencedFiles
+  : filesFromBuildManifest();
+
+if (!fallbackFiles.length) {
   console.error(
-    "Performance budget: root App Router entry not found in build manifests.",
+    "Performance budget: could not resolve the root route initial JavaScript.",
   );
   process.exit(1);
 }
 
-const chunks = [...new Set(rootFiles)]
-  .filter((file) => file.endsWith(".js"))
+const chunks = [...new Set(fallbackFiles)]
+  .filter((file) => file.endsWith(".js") || file.includes(".js?"))
   .map(resolveChunk)
   .filter(Boolean);
 
 if (!chunks.length) {
-  console.error("Performance budget: no root JavaScript chunks resolved.");
+  console.error("Performance budget: no referenced JavaScript chunks exist on disk.");
   process.exit(1);
 }
 
@@ -81,6 +121,7 @@ const kb = (totalGzip / 1024).toFixed(1);
 const budgetKb = (BUDGET_BYTES / 1024).toFixed(0);
 
 console.log("Root initial JavaScript (gzip): " + kb + " KB");
+console.log("Referenced chunks: " + chunks.length);
 console.log("Budget: " + budgetKb + " KB");
 
 if (totalGzip > BUDGET_BYTES) {
