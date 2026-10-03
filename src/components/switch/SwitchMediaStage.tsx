@@ -24,7 +24,6 @@ export function SwitchMediaStage({ mix, pointer }: SwitchMediaStageProps) {
     const touchDevice = navigator.maxTouchPoints > 0;
 
     if (capability !== "full" || coarse || compact || touchDevice) {
-      setShaderReady(false);
       return;
     }
 
