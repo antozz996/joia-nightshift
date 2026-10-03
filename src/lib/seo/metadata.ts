@@ -50,7 +50,7 @@ export function buildSeoMetadata({
         };
 
   return {
-    title,
+    title: { absolute: title },
     description,
     alternates: { canonical },
     robots: seo?.noIndex
