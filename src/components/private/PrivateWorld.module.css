@@ -1498,3 +1498,170 @@
     padding: 4.5rem 1.1rem 1.2rem;
   }
 }
+
+
+/* Editorial transformation — replaces the old interactive before/after slider. */
+.transformationGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .8rem;
+}
+
+.transformationCard {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: 1.6rem;
+  background: rgba(255,255,255,.24);
+  border: 1px solid rgba(69,45,29,.1);
+  box-shadow: 0 1.4rem 3.5rem rgba(75,51,32,.07);
+}
+
+.transformationMedia {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+}
+
+.transformationImage {
+  object-fit: cover;
+  object-position: center;
+  filter: saturate(.8) contrast(1.04) brightness(.88);
+  transition: transform 800ms var(--ease-private), filter 500ms ease;
+}
+
+.transformationCard:hover .transformationImage {
+  transform: scale(1.035);
+  filter: saturate(.92) contrast(1.05) brightness(.92);
+}
+
+.transformationShade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, transparent 45%, rgba(25,18,13,.54)),
+    radial-gradient(circle at 72% 16%, rgba(255,244,224,.13), transparent 28%);
+  pointer-events: none;
+}
+
+.transformationMeta {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.1rem .35rem;
+  font-family: var(--font-private-sans), sans-serif;
+  font-size: .64rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: #76685a;
+}
+
+.transformationCopy {
+  padding: .35rem 1.1rem 1.25rem;
+}
+
+.transformationCopy h3 {
+  margin: 0;
+  max-width: 10ch;
+  font-family: var(--font-private-display), Georgia, serif;
+  font-size: clamp(2rem, 2.7vw, 3.6rem);
+  font-weight: 500;
+  line-height: .94;
+  letter-spacing: -.04em;
+}
+
+.transformationCopy p {
+  margin: .8rem 0 0;
+  color: #6d6154;
+  font-family: var(--font-private-sans), sans-serif;
+  font-size: .82rem;
+  line-height: 1.58;
+}
+
+@media (max-width: 900px), (pointer: coarse) {
+  .page::before {
+    position: absolute;
+    opacity: .42;
+  }
+
+  .page::after {
+    display: none;
+  }
+
+  .nav {
+    background: rgba(239,229,214,.97);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 .65rem 2rem rgba(60,42,28,.07);
+  }
+
+  .hero::before {
+    filter: blur(10px);
+    opacity: .72;
+  }
+
+  .sectionSoft,
+  .sectionWarm,
+  .sectionBronze,
+  .sectionGallery,
+  .sectionBrief {
+    box-shadow:
+      0 1.2rem 2.5rem rgba(75,51,32,.05),
+      inset 0 1px 0 rgba(255,255,255,.36);
+  }
+
+  .heroImageTone,
+  .galleryTone {
+    mix-blend-mode: normal;
+  }
+
+  .transformationGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .transformationCard {
+    display: grid;
+    grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr);
+    min-height: 17rem;
+  }
+
+  .transformationMedia {
+    aspect-ratio: auto;
+    min-height: 17rem;
+    grid-row: 1 / span 2;
+  }
+
+  .transformationMeta,
+  .transformationCopy {
+    align-self: end;
+  }
+
+  .transformationCopy h3 {
+    font-size: clamp(2rem, 8vw, 3.2rem);
+  }
+}
+
+@media (max-width: 600px) {
+  .transformationCard {
+    grid-template-columns: 1fr;
+  }
+
+  .transformationMedia {
+    aspect-ratio: 4 / 3;
+    min-height: 0;
+    grid-row: auto;
+  }
+
+  .transformationMeta {
+    padding-top: .85rem;
+  }
+
+  .transformationCopy {
+    padding-bottom: 1.1rem;
+  }
+
+  .transformationCopy p {
+    font-size: .78rem;
+  }
+}
