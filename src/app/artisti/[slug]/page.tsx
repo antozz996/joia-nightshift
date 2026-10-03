@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { NightFooter } from "@/components/nightlife/NightFooter";
 import { NightMotionController } from "@/components/nightlife/NightMotionController";
 import { NightNav } from "@/components/nightlife/NightNav";
+import { StructuredData } from "@/components/seo/StructuredData";
 import styles from "@/components/nightlife/NightWorld.module.css";
 import { archiveArtists, findArchiveArtist } from "@/content/nightlife";
 import {
@@ -11,6 +12,7 @@ import {
   getNightEventsForArtist,
 } from "@/lib/cms/nightlife";
 import { buildSeoMetadata } from "@/lib/seo/metadata";
+import { artistSchema } from "@/lib/seo/schema";
 
 type PageProps = { params: Promise<{ slug: string }> };
 
@@ -66,6 +68,9 @@ export default async function ArtistPage({ params }: PageProps) {
     <div data-world="night">
       <NightMotionController />
       <NightNav />
+      {cmsArtist ? (
+        <StructuredData data={artistSchema(cmsArtist)} id="artist-schema" />
+      ) : null}
 
       <main className={styles.page}>
         <section className={styles.detailHero}>
