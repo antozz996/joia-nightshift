@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import styles from "./PrivateWorld.module.css";
 
@@ -39,9 +40,19 @@ export function PrivateHero({
         </div>
       </div>
 
-      <div className={styles.heroVisual} aria-hidden="true" data-private-parallax>
-        <div className={styles.heroArch} />
-        {showHistory ? <p className={styles.heroNumber}>20+</p> : null}
+      <div className={styles.heroVisual} data-private-parallax>
+        <div className={styles.heroArch}>
+          <Image
+            className={styles.heroImage}
+            src="/media/private/hero-dinner.jpg"
+            alt="Allestimento tavola JOIA Private Events"
+            fill
+            priority
+            sizes="(max-width: 900px) 100vw, 42vw"
+          />
+          <span className={styles.heroImageTone} aria-hidden="true" />
+        </div>
+        {showHistory ? <p className={styles.heroNumber} aria-hidden="true">20+</p> : null}
       </div>
     </section>
   );
