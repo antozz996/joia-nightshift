@@ -10,6 +10,7 @@ import styles from "@/components/nightlife/NightWorld.module.css";
 import { findNightFormat, nightlifeFormats } from "@/content/nightlife";
 import { getNightEventBySlug } from "@/lib/cms/nightlife";
 import { absoluteUrl } from "@/lib/seo/site-url";
+import { buildSeoMetadata } from "@/lib/seo/metadata";
 import { musicEventSchema } from "@/lib/seo/schema";
 
 type PageProps = { params: Promise<{ slug: string }> };
@@ -36,21 +37,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const archive = findNightFormat(slug);
 
   if (event) {
-    return {
-      title: event.title + " | JOIA / FORMĀ",
-      description:
+    return buildSeoMetadata({
+      defaultTitle: event.title + " | JOIA / FORMĀ",
+      defaultDescription:
         event.seoDescription ??
         ("Evento JOIA / FORMĀ a Napoli — " + formatEventDate(event.startsAt)),
-      alternates: { canonical: absoluteUrl("/eventi/" + slug + "/") },
-      openGraph: {
-        type: "article",
-        title: event.title + " | JOIA / FORMĀ",
-        description:
-          event.seoDescription ??
-          ("Evento JOIA / FORMĀ a Napoli — " + formatEventDate(event.startsAt)),
-        url: absoluteUrl("/eventi/" + slug + "/"),
-      },
-    };
+      path: "/eventi/" + slug + "/",
+      seo: event.seo,
+      fallbackImageUrl: event.posterUrl,
+      openGraphType: "article",
+    });
   }
 
   if (archive) {

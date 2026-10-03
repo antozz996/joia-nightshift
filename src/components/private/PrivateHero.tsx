@@ -11,6 +11,8 @@ type PrivateHeroProps = {
   secondaryHref?: string;
   secondaryLabel?: string;
   showHistory?: boolean;
+  imageSrc?: string;
+  imageAlt?: string;
 };
 
 export function PrivateHero({
@@ -22,6 +24,8 @@ export function PrivateHero({
   secondaryHref = "#formati",
   secondaryLabel = "Esplora i formati",
   showHistory = true,
+  imageSrc = "/media/private/hero-dinner.jpg",
+  imageAlt = "Allestimento tavola JOIA Private Events",
 }: PrivateHeroProps) {
   return (
     <section className={styles.hero}>
@@ -44,8 +48,8 @@ export function PrivateHero({
         <div className={styles.heroArch}>
           <Image
             className={styles.heroImage}
-            src="/media/private/hero-dinner.jpg"
-            alt="Allestimento tavola JOIA Private Events"
+            src={imageSrc}
+            alt={imageAlt}
             fill
             priority
             sizes="(max-width: 900px) 100vw, 42vw"

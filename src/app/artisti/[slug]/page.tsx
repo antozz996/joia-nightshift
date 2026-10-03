@@ -4,13 +4,15 @@ import { notFound } from "next/navigation";
 import { NightFooter } from "@/components/nightlife/NightFooter";
 import { NightMotionController } from "@/components/nightlife/NightMotionController";
 import { NightNav } from "@/components/nightlife/NightNav";
+import { StructuredData } from "@/components/seo/StructuredData";
 import styles from "@/components/nightlife/NightWorld.module.css";
 import { archiveArtists, findArchiveArtist } from "@/content/nightlife";
 import {
   getNightArtistBySlug,
   getNightEventsForArtist,
 } from "@/lib/cms/nightlife";
-import { absoluteUrl } from "@/lib/seo/site-url";
+import { buildSeoMetadata } from "@/lib/seo/metadata";
+import { artistSchema } from "@/lib/seo/schema";
 
 type PageProps = { params: Promise<{ slug: string }> };
 
@@ -37,14 +39,19 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return { title: "Artista | JOIA / FORMĀ" };
   }
 
-  return {
-    title: artist.name + " | JOIA / FORMĀ",
-    description:
-      "Archivio artista JOIA / FORMĀ: " +
+  const description =
+    cmsArtist?.seoDescription ??
+    ("Archivio artista JOIA / FORMĀ: " +
       artist.name +
-      ". Eventi, memoria nightlife e collegamenti futuri dal CMS.",
-    alternates: { canonical: absoluteUrl("/artisti/" + slug + "/") },
-  };
+      ". Eventi, memoria nightlife e collegamenti futuri dal CMS.");
+
+  return buildSeoMetadata({
+    defaultTitle: artist.name + " | JOIA / FORMĀ",
+    defaultDescription: description,
+    path: "/artisti/" + slug + "/",
+    seo: cmsArtist?.seo,
+    fallbackImageUrl: cmsArtist?.portraitUrl,
+  });
 }
 
 export default async function ArtistPage({ params }: PageProps) {
@@ -61,6 +68,9 @@ export default async function ArtistPage({ params }: PageProps) {
     <div data-world="night">
       <NightMotionController />
       <NightNav />
+      {cmsArtist ? (
+        <StructuredData data={artistSchema(cmsArtist)} id="artist-schema" />
+      ) : null}
 
       <main className={styles.page}>
         <section className={styles.detailHero}>

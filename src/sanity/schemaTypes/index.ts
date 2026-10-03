@@ -5,9 +5,11 @@ import { gallery } from "./gallery";
 import { mediaImage } from "./mediaImage";
 import { privateEventType } from "./privateEventType";
 import { siteSettings } from "./siteSettings";
+import { seo } from "./seo";
 
 export const schemaTypes = [
   mediaImage,
+  seo,
   siteSettings,
   event,
   artist,

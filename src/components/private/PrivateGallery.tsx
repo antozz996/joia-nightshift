@@ -1,8 +1,15 @@
 import Image from "next/image";
 import styles from "./PrivateWorld.module.css";
 
+type CmsGalleryItem = {
+  src: string;
+  alt: string;
+  label?: string;
+};
+
 type PrivateGalleryProps = {
   items?: readonly string[];
+  media?: readonly CmsGalleryItem[];
 };
 
 const mediaByLabel: Record<string, { src: string; alt: string }> = {
@@ -27,29 +34,33 @@ const mediaByLabel: Record<string, { src: string; alt: string }> = {
 
 export function PrivateGallery({
   items = ["welcome", "table", "details", "party"],
+  media,
 }: PrivateGalleryProps) {
+  const resolved = media?.length
+    ? media
+    : items.map((item) => ({
+        ...(mediaByLabel[item] ?? mediaByLabel.party),
+        label: item.replaceAll("-", " "),
+      }));
+
   return (
     <div className={styles.gallery}>
-      {items.map((item, index) => {
-        const media = mediaByLabel[item] ?? mediaByLabel.party;
-
-        return (
-          <figure
-            className={styles.galleryItem}
-            data-label={item.replaceAll("-", " ")}
-            key={item + index}
-          >
-            <Image
-              className={styles.galleryImage}
-              src={media.src}
-              alt={media.alt}
-              fill
-              sizes="(max-width: 700px) 100vw, 33vw"
-            />
-            <span className={styles.galleryTone} aria-hidden="true" />
-          </figure>
-        );
-      })}
+      {resolved.map((item, index) => (
+        <figure
+          className={styles.galleryItem}
+          data-label={item.label ?? "JOIA Private"}
+          key={item.src + index}
+        >
+          <Image
+            className={styles.galleryImage}
+            src={item.src}
+            alt={item.alt}
+            fill
+            sizes="(max-width: 700px) 100vw, 33vw"
+          />
+          <span className={styles.galleryTone} aria-hidden="true" />
+        </figure>
+      ))}
     </div>
   );
 }
