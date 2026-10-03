@@ -89,12 +89,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
-  const staticPrivatePages: MetadataRoute.Sitemap = privateEventTypes.map((item) => ({
-    url: absoluteUrl("/private-events/" + item.slug + "/"),
-    lastModified: now,
-    changeFrequency: "monthly",
-    priority: 0.8,
-  }));
+  const cmsPrivateBySlug = new Map(cmsPrivateTypes.map((item) => [item.slug, item]));
+
+  const staticPrivatePages: MetadataRoute.Sitemap = privateEventTypes
+    .filter((item) => !cmsPrivateBySlug.get(item.slug)?.seo?.noIndex)
+    .map((item) => {
+      const cmsOverride = cmsPrivateBySlug.get(item.slug);
+
+      return {
+        url: absoluteUrl("/private-events/" + item.slug + "/"),
+        lastModified: cmsOverride?.updatedAt ? new Date(cmsOverride.updatedAt) : now,
+        changeFrequency: "monthly" as const,
+        priority: 0.8,
+      };
+    });
 
   const staticPrivateSlugs = new Set<string>(privateEventTypes.map((item) => item.slug));
   const cmsPrivatePages: MetadataRoute.Sitemap = cmsPrivateTypes
@@ -117,13 +125,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ? artists.filter((artist) => !artist.seo?.noIndex)
     : archiveArtists.map((artist) => ({ ...artist }));
 
-  const artistPages: MetadataRoute.Sitemap = fallbackArtists.map((artist) => ({
-    url: absoluteUrl("/artisti/" + artist.slug + "/"),
-    lastModified:
-      "updatedAt" in artist && artist.updatedAt ? new Date(artist.updatedAt) : now,
-    changeFrequency: "monthly",
-    priority: 0.6,
-  }));
+  const artistPages: MetadataRoute.Sitemap = fallbackArtists.map((artist) => {
+    const updatedAt =
+      "updatedAt" in artist && typeof artist.updatedAt === "string"
+        ? artist.updatedAt
+        : undefined;
+
+    return {
+      url: absoluteUrl("/artisti/" + artist.slug + "/"),
+      lastModified: updatedAt ? new Date(updatedAt) : now,
+      changeFrequency: "monthly",
+      priority: 0.6,
+    };
+  });
 
   const eventPages: MetadataRoute.Sitemap = events
     .filter((event) => !event.seo?.noIndex)
