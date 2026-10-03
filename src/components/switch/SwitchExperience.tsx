@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type { MouseEvent as ReactMouseEvent } from "react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./SwitchExperience.module.css";
 
 type World = "private" | "night";
@@ -18,7 +18,6 @@ export function SwitchExperience() {
   const [clock, setClock] = useState("--:--");
   const [preview, setPreview] = useState<World | null>(null);
   const [entering, setEntering] = useState<World | null>(null);
-  const timerRef = useRef<number | null>(null);
 
   useEffect(() => {
     router.prefetch(destinations.private);
@@ -40,7 +39,6 @@ export function SwitchExperience() {
 
     return () => {
       window.clearInterval(interval);
-      if (timerRef.current) window.clearTimeout(timerRef.current);
     };
   }, [router]);
 
@@ -56,7 +54,7 @@ export function SwitchExperience() {
     setPreview(world);
     setEntering(world);
 
-    timerRef.current = window.setTimeout(() => {
+    window.setTimeout(() => {
       router.push(href);
     }, 680);
   };
