@@ -54,15 +54,15 @@ export default function NightlifePage() {
 
       <section className={styles.section} id="archive">
         <div className={styles.sectionHeader} data-night-reveal>
-          <p className={styles.eyebrow}>02 / Flyer archive</p>
+          <p className={styles.eyebrow}>02 / Visual archive</p>
           <div>
             <h2 className={styles.sectionTitle}>
               Vent’anni non sono <i>background.</i>
             </h2>
             <p className={styles.sectionText}>
-              Sono materiale. Gli slot qui sotto sono pronti per flyer storici, locandine,
-              screenshot, clip e grafiche reali: nessuna immagine stock e nessun archivio
-              inventato.
+              Sono materiale. La parete ora mescola fotografie FORMĀ reali con slot riservati
+              ai flyer storici che devono ancora essere raccolti: nessuna immagine stock e
+              nessun falso archivio.
             </p>
           </div>
         </div>
