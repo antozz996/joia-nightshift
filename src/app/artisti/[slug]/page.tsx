@@ -10,6 +10,7 @@ import {
   getNightArtistBySlug,
   getNightEventsForArtist,
 } from "@/lib/cms/nightlife";
+import { absoluteUrl } from "@/lib/seo/site-url";
 
 type PageProps = { params: Promise<{ slug: string }> };
 
@@ -42,6 +43,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       "Archivio artista JOIA / FORMĀ: " +
       artist.name +
       ". Eventi, memoria nightlife e collegamenti futuri dal CMS.",
+    alternates: { canonical: absoluteUrl("/artisti/" + slug + "/") },
   };
 }
 
