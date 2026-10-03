@@ -1498,3 +1498,146 @@
     padding: 4.5rem 1.1rem 1.2rem;
   }
 }
+
+
+/* Editorial transformation story — replaces technical before/after slider */
+.transformationStory {
+  display: grid;
+  grid-template-columns: minmax(0, 1.42fr) minmax(0, .79fr) minmax(0, .79fr);
+  gap: .8rem;
+  min-height: clamp(32rem, 56vw, 48rem);
+}
+
+.transformationScene {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: 1.6rem;
+  background: #2b211a;
+  box-shadow: 0 1.6rem 4rem rgba(62,42,28,.1);
+}
+
+.transformationSceneLead {
+  border-radius: 48% 48% 1.6rem 1.6rem;
+}
+
+.transformationImage {
+  object-fit: cover;
+  object-position: center;
+  filter: saturate(.78) contrast(1.06) brightness(.82);
+  transform: scale(1.01);
+  transition:
+    transform 900ms var(--ease-private),
+    filter 700ms var(--ease-private);
+}
+
+.transformationScene:hover .transformationImage {
+  transform: scale(1.035);
+  filter: saturate(.9) contrast(1.06) brightness(.88);
+}
+
+.transformationShade {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(20,14,10,.06), rgba(20,14,10,.14) 45%, rgba(20,14,10,.82)),
+    radial-gradient(circle at 76% 16%, rgba(214,189,150,.16), transparent 26rem);
+}
+
+.transformationCopy {
+  position: absolute;
+  z-index: 2;
+  left: 1.25rem;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  display: grid;
+  grid-template-columns: auto minmax(0,1fr);
+  gap: .9rem;
+  align-items: end;
+  color: #fff8ee;
+}
+
+.transformationIndex {
+  align-self: start;
+  padding-top: .28rem;
+  font-family: var(--font-private-sans), sans-serif;
+  font-size: .62rem;
+  letter-spacing: .14em;
+  opacity: .6;
+}
+
+.transformationCopy h3 {
+  margin: 0;
+  font-family: var(--font-private-display), Georgia, serif;
+  font-size: clamp(2rem, 3.3vw, 4.2rem);
+  font-weight: 500;
+  line-height: .88;
+  letter-spacing: -.045em;
+}
+
+.transformationCopy p {
+  max-width: 28rem;
+  margin: .6rem 0 0;
+  color: rgba(255,248,238,.72);
+  font-family: var(--font-private-sans), sans-serif;
+  font-size: .78rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 900px) {
+  .transformationStory {
+    grid-template-columns: 1fr 1fr;
+    min-height: auto;
+  }
+
+  .transformationScene {
+    min-height: 24rem;
+  }
+
+  .transformationSceneLead {
+    grid-column: 1 / -1;
+    min-height: 32rem;
+    border-radius: 1.6rem 1.6rem 48% 48%;
+  }
+}
+
+@media (max-width: 700px) {
+  .transformationStory {
+    grid-template-columns: 1fr;
+    gap: .7rem;
+  }
+
+  .transformationScene,
+  .transformationSceneLead {
+    grid-column: auto;
+    min-height: 25rem;
+    border-radius: 1.4rem;
+  }
+
+  .transformationSceneLead {
+    min-height: 31rem;
+    border-radius: 1.4rem 1.4rem 44% 44%;
+  }
+
+  .transformationCopy {
+    left: 1rem;
+    right: 1rem;
+    bottom: 1rem;
+  }
+
+  .transformationCopy h3 {
+    font-size: clamp(2.5rem, 13vw, 4rem);
+  }
+
+  .transformationCopy p {
+    font-size: .74rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .transformationImage {
+    transition: none;
+  }
+}
