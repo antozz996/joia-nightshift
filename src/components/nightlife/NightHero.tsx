@@ -1,9 +1,20 @@
 import Link from "next/link";
-import { nightlifeFallback } from "@/content/nightlife";
+import { getNextNightEvent } from "@/lib/cms/nightlife";
 import styles from "./NightWorld.module.css";
 
-export function NightHero() {
-  const next = nightlifeFallback.nextEvent;
+function formatEventDate(value: string) {
+  return new Intl.DateTimeFormat("it-IT", {
+    timeZone: "Europe/Rome",
+    weekday: "short",
+    day: "2-digit",
+    month: "short",
+    hour: "2-digit",
+    minute: "2-digit",
+  }).format(new Date(value));
+}
+
+export async function NightHero() {
+  const next = await getNextNightEvent();
 
   return (
     <section className={styles.hero} id="next">
@@ -34,8 +45,15 @@ export function NightHero() {
             </h2>
             <p className={styles.nextMeta}>
               {next
-                ? next.subtitle ?? "Dettagli evento"
-                : "Nessuna data viene inventata: appena il team pubblica il prossimo evento nel CMS, questa card si aggiorna e riporta ticket, tavoli e line-up."}
+                ? [
+                    next.subtitle,
+                    next.artists?.length
+                      ? "Line-up: " + next.artists.map((artist) => artist.name).join(" · ")
+                      : "",
+                  ]
+                    .filter(Boolean)
+                    .join(" — ")
+                : "Nessuna data viene inventata: appena il team pubblica il prossimo evento nel CMS, questa card si aggiorna con ticket, tavoli e line-up."}
             </p>
           </div>
 
@@ -60,7 +78,7 @@ export function NightHero() {
                 </Link>
               )}
             </div>
-            <span>{next ? next.startsAt : "CMS driven"}</span>
+            <span>{next ? formatEventDate(next.startsAt) : "CMS driven"}</span>
           </div>
         </article>
       </div>
