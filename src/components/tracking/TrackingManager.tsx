@@ -44,6 +44,7 @@ export function TrackingManager() {
   const searchParams = useSearchParams();
   const [consent, setConsent] = useState<ConsentState | null>(null);
   const [customizing, setCustomizing] = useState(false);
+  const [managerOpen, setManagerOpen] = useState(false);
   const [draft, setDraft] = useState<ConsentState>({
     analytics: false,
     marketing: false,
@@ -146,9 +147,18 @@ export function TrackingManager() {
   }, [consent]);
 
   const save = (value: ConsentState) => {
+    const needsReload = Boolean(
+      consent &&
+        ((consent.analytics && !value.analytics) ||
+          (consent.marketing && !value.marketing)),
+    );
+
     writeConsent(value);
     setConsent(value);
     setCustomizing(false);
+    setManagerOpen(false);
+
+    if (needsReload) window.location.reload();
   };
 
   const gaInit =
@@ -193,7 +203,21 @@ export function TrackingManager() {
         />
       ) : null}
 
-      {consent === null ? (
+      {consent !== null && !managerOpen ? (
+        <button
+          className={styles.settingsButton}
+          type="button"
+          onClick={() => {
+            setDraft(consent);
+            setCustomizing(true);
+            setManagerOpen(true);
+          }}
+        >
+          Cookie settings
+        </button>
+      ) : null}
+
+      {consent === null || managerOpen ? (
         <aside className={styles.banner} aria-label="Preferenze cookie">
           <p className={styles.copy}>
             Usiamo cookie tecnici sempre necessari. Analytics e marketing partono solo con
