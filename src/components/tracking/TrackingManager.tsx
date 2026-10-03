@@ -56,8 +56,10 @@ export function TrackingManager() {
   useEffect(() => {
     captureAttribution();
     const existing = readConsent();
-    setConsent(existing);
-    if (existing) setDraft(existing);
+    const firstFrame = window.requestAnimationFrame(() => {
+      setConsent(existing);
+      if (existing) setDraft(existing);
+    });
 
     const onConsent = (event: Event) => {
       const detail = (event as CustomEvent<ConsentState>).detail;
@@ -66,7 +68,10 @@ export function TrackingManager() {
     };
 
     window.addEventListener("joia:consent", onConsent);
-    return () => window.removeEventListener("joia:consent", onConsent);
+    return () => {
+      window.cancelAnimationFrame(firstFrame);
+      window.removeEventListener("joia:consent", onConsent);
+    };
   }, []);
 
   const currentUrl = useMemo(() => {
