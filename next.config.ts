@@ -66,6 +66,15 @@ const nextConfig: NextConfig = {
         source: "/(.*)",
         headers: securityHeaders,
       },
+      {
+        source: "/en/:path*",
+        headers: [
+          {
+            key: "Content-Language",
+            value: "en-GB",
+          },
+        ],
+      },
     ];
   },
 };
