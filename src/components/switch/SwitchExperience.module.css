@@ -386,12 +386,12 @@
   place-items: center;
   overflow: hidden;
   opacity: 0;
-  clip-path: inset(49% 49% 49% 49% round 2rem);
-  transform: scale(.98);
+  transform: scale(1.055);
+  filter: saturate(.92) brightness(.9);
   pointer-events: none;
   background-size: cover;
   background-position: center;
-  will-change: clip-path, transform, opacity;
+  will-change: transform, opacity;
 }
 
 .transitionLayer::before {
@@ -455,16 +455,16 @@
 @keyframes thresholdOpen {
   0% {
     opacity: 0;
-    clip-path: inset(49% 49% 49% 49% round 2rem);
-    transform: scale(.98);
+    transform: scale(1.055);
+    filter: saturate(.92) brightness(.9);
   }
-  18% {
+  22% {
     opacity: 1;
   }
   100% {
     opacity: 1;
-    clip-path: inset(0 0 0 0 round 0);
-    transform: scale(1.035);
+    transform: scale(1);
+    filter: saturate(1) brightness(1);
   }
 }
 
@@ -588,7 +588,7 @@
   }
 
   .transitionLayer {
-    clip-path: inset(49% 48% 49% 48% round 1.6rem);
+    transform: scale(1.035);
   }
 
   .transitionMark {
@@ -614,7 +614,6 @@
   .transitionActive {
     animation: none;
     opacity: 1;
-    clip-path: inset(0);
     transform: none;
   }
 }
