@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "next-sanity";
+import type { CmsSeoFields } from "@/lib/seo/metadata";
 
 export type NightEventRecord = {
   title: string;
@@ -11,6 +12,9 @@ export type NightEventRecord = {
   tableUrl?: string;
   guestListEnabled?: boolean;
   artists?: { name: string; slug: string }[];
+  posterUrl?: string;
+  updatedAt?: string;
+  seo?: CmsSeoFields;
   seoDescription?: string;
 };
 
@@ -21,8 +25,49 @@ export type NightArtistRecord = {
   genres?: string[];
   country?: string;
   instagram?: string;
+  portraitUrl?: string;
+  updatedAt?: string;
+  seo?: CmsSeoFields;
   seoDescription?: string;
 };
+
+const SEO_PROJECTION = `seo{
+  title,
+  description,
+  canonicalUrl,
+  noIndex,
+  focusKeyword,
+  "imageUrl": image.asset->url
+}`;
+
+const EVENT_PROJECTION = `{
+  title,
+  "slug": slug.current,
+  startsAt,
+  subtitle,
+  ticketUrl,
+  tableUrl,
+  guestListEnabled,
+  "posterUrl": poster.asset->url,
+  "_updatedAt": _updatedAt,
+  "updatedAt": _updatedAt,
+  "artists": artists[]->{name, "slug": slug.current},
+  ${SEO_PROJECTION},
+  seoDescription
+}`;
+
+const ARTIST_PROJECTION = `{
+  name,
+  "slug": slug.current,
+  "bio": pt::text(bio),
+  genres,
+  country,
+  instagram,
+  "portraitUrl": portrait.asset->url,
+  "updatedAt": _updatedAt,
+  ${SEO_PROJECTION},
+  seoDescription
+}`;
 
 function getOptionalClient() {
   const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
@@ -44,7 +89,8 @@ export async function getNextNightEvent(): Promise<NightEventRecord | null> {
   if (!client) return null;
 
   return client.fetch<NightEventRecord | null>(
-    '*[_type == "event" && startsAt >= now()] | order(startsAt asc)[0]{title,"slug":slug.current,startsAt,subtitle,ticketUrl,tableUrl,guestListEnabled,"artists":artists[]->{name,"slug":slug.current},seoDescription}',
+    `*[_type == "event" && startsAt >= now() && coalesce(seo.noIndex, false) == false]
+      | order(startsAt asc)[0] ${EVENT_PROJECTION}`,
     {},
     { next: { revalidate: 300 } },
   );
@@ -57,7 +103,7 @@ export async function getNightEventBySlug(
   if (!client) return null;
 
   return client.fetch<NightEventRecord | null>(
-    '*[_type == "event" && slug.current == $slug][0]{title,"slug":slug.current,startsAt,subtitle,ticketUrl,tableUrl,guestListEnabled,"artists":artists[]->{name,"slug":slug.current},seoDescription}',
+    `*[_type == "event" && slug.current == $slug][0] ${EVENT_PROJECTION}`,
     { slug },
     { next: { revalidate: 300 } },
   );
@@ -68,7 +114,8 @@ export async function getFeaturedNightArtists(): Promise<NightArtistRecord[]> {
   if (!client) return [];
 
   return client.fetch<NightArtistRecord[]>(
-    '*[_type == "artist" && featured == true] | order(name asc)[0...12]{name,"slug":slug.current,genres,country,instagram,seoDescription}',
+    `*[_type == "artist" && featured == true && coalesce(seo.noIndex, false) == false]
+      | order(name asc)[0...12] ${ARTIST_PROJECTION}`,
     {},
     { next: { revalidate: 600 } },
   );
@@ -81,7 +128,7 @@ export async function getNightArtistBySlug(
   if (!client) return null;
 
   return client.fetch<NightArtistRecord | null>(
-    '*[_type == "artist" && slug.current == $slug][0]{name,"slug":slug.current,"bio":pt::text(bio),genres,country,instagram,seoDescription}',
+    `*[_type == "artist" && slug.current == $slug][0] ${ARTIST_PROJECTION}`,
     { slug },
     { next: { revalidate: 600 } },
   );
@@ -94,7 +141,11 @@ export async function getNightEventsForArtist(
   if (!client) return [];
 
   return client.fetch<NightEventRecord[]>(
-    '*[_type == "event" && references(*[_type == "artist" && slug.current == $slug]._id)] | order(startsAt desc)[0...12]{title,"slug":slug.current,startsAt,subtitle,ticketUrl,tableUrl,guestListEnabled,"artists":artists[]->{name,"slug":slug.current},seoDescription}',
+    `*[
+      _type == "event" &&
+      references(*[_type == "artist" && slug.current == $slug]._id) &&
+      coalesce(seo.noIndex, false) == false
+    ] | order(startsAt desc)[0...12] ${EVENT_PROJECTION}`,
     { slug },
     { next: { revalidate: 600 } },
   );
@@ -105,7 +156,7 @@ export async function getAllNightEvents(): Promise<NightEventRecord[]> {
   if (!client) return [];
 
   return client.fetch<NightEventRecord[]>(
-    '*[_type == "event"] | order(startsAt desc){title,"slug":slug.current,startsAt,subtitle,ticketUrl,tableUrl,guestListEnabled,"artists":artists[]->{name,"slug":slug.current},seoDescription}',
+    `*[_type == "event"] | order(startsAt desc) ${EVENT_PROJECTION}`,
     {},
     { next: { revalidate: 600 } },
   );
@@ -116,7 +167,7 @@ export async function getAllNightArtists(): Promise<NightArtistRecord[]> {
   if (!client) return [];
 
   return client.fetch<NightArtistRecord[]>(
-    '*[_type == "artist"] | order(name asc){name,"slug":slug.current,genres,country,instagram,seoDescription}',
+    `*[_type == "artist"] | order(name asc) ${ARTIST_PROJECTION}`,
     {},
     { next: { revalidate: 600 } },
   );
