@@ -8,6 +8,7 @@ import { PrivateHero } from "@/components/private/PrivateHero";
 import { PrivateMoments } from "@/components/private/PrivateMoments";
 import styles from "@/components/private/PrivateWorld.module.css";
 import { getPrivateEventType, privateEventTypes } from "@/content/private-events";
+import { absoluteUrl } from "@/lib/seo/site-url";
 
 type PageProps = { params: Promise<{ tipo: string }> };
 
@@ -26,6 +27,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: content.seoTitle,
     description: content.seoDescription,
+    alternates: { canonical: absoluteUrl("/private-events/" + tipo + "/") },
   };
 }
 
