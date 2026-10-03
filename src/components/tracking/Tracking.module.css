@@ -1,0 +1,65 @@
+.banner {
+  position: fixed;
+  z-index: 140;
+  left: max(1rem, env(safe-area-inset-left));
+  right: max(1rem, env(safe-area-inset-right));
+  bottom: max(1rem, env(safe-area-inset-bottom));
+  width: min(44rem, calc(100% - 2rem));
+  margin-inline: auto;
+  padding: 1rem;
+  border: 1px solid rgba(233,236,225,.18);
+  background: rgba(7,8,6,.94);
+  color: #e9ece1;
+  backdrop-filter: blur(18px);
+  box-shadow: 0 1.2rem 4rem rgba(0,0,0,.28);
+  font-family: var(--font-night-mono), monospace;
+}
+
+.copy {
+  margin: 0 0 .9rem;
+  color: #b4b8aa;
+  font-size: .72rem;
+  line-height: 1.55;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+}
+
+.button {
+  appearance: none;
+  border: 1px solid rgba(233,236,225,.22);
+  background: transparent;
+  color: #e9ece1;
+  min-height: 2.6rem;
+  padding: .65rem .8rem;
+  cursor: pointer;
+  font: inherit;
+  font-size: .66rem;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.primary {
+  background: #d7ff00;
+  border-color: #d7ff00;
+  color: #070806;
+}
+
+.preferences {
+  display: grid;
+  gap: .6rem;
+  margin: .8rem 0;
+  padding-top: .8rem;
+  border-top: 1px solid rgba(233,236,225,.14);
+}
+
+.toggle {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  font-size: .7rem;
+}
