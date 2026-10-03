@@ -99,3 +99,25 @@ export async function getNightEventsForArtist(
     { next: { revalidate: 600 } },
   );
 }
+
+export async function getAllNightEvents(): Promise<NightEventRecord[]> {
+  const client = getOptionalClient();
+  if (!client) return [];
+
+  return client.fetch<NightEventRecord[]>(
+    '*[_type == "event"] | order(startsAt desc){title,"slug":slug.current,startsAt,subtitle,ticketUrl,tableUrl,guestListEnabled,"artists":artists[]->{name,"slug":slug.current},seoDescription}',
+    {},
+    { next: { revalidate: 600 } },
+  );
+}
+
+export async function getAllNightArtists(): Promise<NightArtistRecord[]> {
+  const client = getOptionalClient();
+  if (!client) return [];
+
+  return client.fetch<NightArtistRecord[]>(
+    '*[_type == "artist"] | order(name asc){name,"slug":slug.current,genres,country,instagram,seoDescription}',
+    {},
+    { next: { revalidate: 600 } },
+  );
+}
