@@ -10,7 +10,6 @@ import {
   getNightArtistBySlug,
   getNightEventsForArtist,
 } from "@/lib/cms/nightlife";
-import { absoluteUrl } from "@/lib/seo/site-url";
 import { buildSeoMetadata } from "@/lib/seo/metadata";
 
 type PageProps = { params: Promise<{ slug: string }> };
