@@ -81,7 +81,7 @@ export async function sendMetaLead({
   }
 
   const response = await fetch(
-    "https://graph.facebook.com/v21.0/" +
+    "https://graph.facebook.com/" +
       encodeURIComponent(pixelId) +
       "/events?access_token=" +
       encodeURIComponent(accessToken),
