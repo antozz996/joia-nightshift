@@ -1067,3 +1067,60 @@
     transition: none;
   }
 }
+
+
+/* Curated real JOIA media — Drive review 2026-10-03 */
+.heroImage {
+  object-fit: cover;
+  object-position: 52% 48%;
+  filter: saturate(.78) contrast(1.04) brightness(.96);
+  transform: scale(1.015);
+}
+
+.heroImageTone {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(214,189,150,.06), rgba(27,23,18,.16)),
+    radial-gradient(circle at 70% 18%, rgba(255,255,255,.18), transparent 30%);
+  mix-blend-mode: soft-light;
+}
+
+.galleryImage {
+  object-fit: cover;
+  object-position: center;
+  filter: saturate(.82) contrast(1.04) brightness(.96);
+  transition: transform 900ms var(--ease-private), filter 600ms var(--ease-private);
+}
+
+.galleryItem:hover .galleryImage {
+  transform: scale(1.035);
+  filter: saturate(.92) contrast(1.03) brightness(.98);
+}
+
+.galleryTone {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent 45%, rgba(27,23,18,.44));
+}
+
+.galleryItem::before {
+  color: #fff8ee;
+  text-shadow: 0 1px 18px rgba(0,0,0,.34);
+}
+
+.galleryItem::after {
+  content: "JOIA / PRIVATE";
+  color: rgba(255,248,238,.72);
+  z-index: 2;
+}
+
+.afterLayer {
+  background:
+    linear-gradient(180deg, rgba(27,23,18,.08), rgba(27,23,18,.35)),
+    url("/media/private/table.jpg") center / cover no-repeat;
+}
