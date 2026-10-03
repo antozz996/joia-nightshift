@@ -508,12 +508,11 @@ html[data-custom-cursor="true"] .custom-cursor {
     scroll-behavior: auto;
   }
 
-  .film-grain,
-  .kinetic-marquee__track {
+  .film-grain {
     animation: none;
   }
 
   .kinetic-marquee__track {
-    transform: none;
+    animation-duration: 38s;
   }
 }
