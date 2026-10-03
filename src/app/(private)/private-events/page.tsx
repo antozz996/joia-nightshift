@@ -62,8 +62,8 @@ export default function PrivateEventsPage() {
           <div>
             <h2 className={styles.sectionTitle}>Non decorare lo spazio. Cambiarlo.</h2>
             <p className={styles.sectionText}>
-              Trascina il controllo per leggere la trasformazione: dalla struttura più
-              neutra a una sala realmente allestita, con luce, tavoli e atmosfera JOIA.
+              Non mostriamo un prima e dopo artificiale. Seguiamo tre modi reali in cui
+              la stessa sala cambia presenza: tavola, cocktail e party.
             </p>
           </div>
         </div>
