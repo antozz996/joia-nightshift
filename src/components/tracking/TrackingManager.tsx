@@ -2,7 +2,7 @@
 
 import Script from "next/script";
 import { usePathname, useSearchParams } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   captureAttribution,
   getAttribution,
@@ -49,6 +49,7 @@ export function TrackingManager() {
     analytics: false,
     marketing: false,
   });
+  const previousUrlRef = useRef<string | null>(null);
 
   const gaId = process.env.NEXT_PUBLIC_GA4_ID;
   const metaPixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID;
@@ -80,6 +81,14 @@ export function TrackingManager() {
   }, [pathname, searchParams]);
 
   useEffect(() => {
+    if (previousUrlRef.current === null) {
+      previousUrlRef.current = currentUrl;
+      return;
+    }
+
+    if (previousUrlRef.current === currentUrl) return;
+    previousUrlRef.current = currentUrl;
+
     if (!consent?.analytics || !gaId || !window.gtag) return;
 
     window.gtag("event", "page_view", {
@@ -172,7 +181,7 @@ export function TrackingManager() {
     "window.gtag('js',new Date());" +
     "window.gtag('config','" +
     (gaId ?? "") +
-    "',{send_page_view:false,anonymize_ip:true});";
+    "',{anonymize_ip:true});";
 
   const metaInit =
     "!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?" +
