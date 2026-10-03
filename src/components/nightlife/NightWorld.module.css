@@ -976,3 +976,31 @@
     url("/media/nightlife/forma-community.jpg") center 52% / cover no-repeat;
   filter: saturate(.72) contrast(1.12);
 }
+
+
+.flyerImage {
+  object-fit: cover;
+  object-position: center;
+  filter: saturate(.68) contrast(1.12) brightness(.72);
+  transition: transform 420ms var(--ease-night), filter 260ms ease;
+}
+
+.flyer:hover .flyerImage {
+  transform: scale(1.035);
+  filter: saturate(.82) contrast(1.14) brightness(.8);
+}
+
+.flyerShade {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(7,8,6,.14), rgba(7,8,6,.72)),
+    linear-gradient(120deg, transparent 55%, rgba(215,255,0,.06));
+}
+
+.flyer > span,
+.flyer > strong {
+  z-index: 2;
+}
