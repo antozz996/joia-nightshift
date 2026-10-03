@@ -5,12 +5,16 @@ import { NightFormats } from "@/components/nightlife/NightFormats";
 import { NightHero } from "@/components/nightlife/NightHero";
 import { NightlifeLeadForm } from "@/components/nightlife/NightlifeLeadForm";
 import { KineticMarquee } from "@/components/shared/KineticMarquee";
+import { FaqSection } from "@/components/seo/FaqSection";
+import { nightlifeFaqs } from "@/content/faqs";
+import { localizedAlternates } from "@/lib/seo/site-url";
 import styles from "@/components/nightlife/NightWorld.module.css";
 
 export const metadata: Metadata = {
   title: "FORMĀ / Nightlife a Napoli",
   description:
     "JOIA nightlife: musica, artisti, serate, ticket, tavoli e community. FORMĀ è il linguaggio notturno di JOIA a Napoli.",
+  alternates: localizedAlternates("/nightlife/", "/en/nightlife/"),
 };
 
 export default function NightlifePage() {
@@ -81,6 +85,8 @@ export default function NightlifePage() {
         </div>
         <NightArtists />
       </section>
+
+      <FaqSection items={nightlifeFaqs} world="night" />
 
       <section className={styles.section} id="community">
         <div className={styles.leadGrid}>
