@@ -22,7 +22,10 @@ export function PrivateConfigurator() {
             onClick={() => setActiveId(layout.id)}
           >
             <span className={styles.configIndex}>{layout.index}</span>
-            <span className={styles.configLabel}>{layout.label}</span>
+            <span className={styles.configButtonText}>
+              <span className={styles.configLabel}>{layout.label}</span>
+              <span className={styles.configButtonCopy}>{layout.windowCopy}</span>
+            </span>
             <span className={styles.configArrow} aria-hidden="true">↗</span>
           </button>
         ))}
@@ -43,8 +46,12 @@ export function PrivateConfigurator() {
 
         <div className={styles.configDetails}>
           <div>
+            <p className={styles.configKicker}>Assetto selezionato</p>
             <h3>{active.label}</h3>
             <p>{active.description}</p>
+            <p className={styles.configSuitable}>
+              <strong>Ideale per:</strong> {active.suitableFor}
+            </p>
             <div className={styles.tags}>
               {active.tags.map((tag) => (
                 <span className={styles.tag} key={tag}>{tag}</span>
