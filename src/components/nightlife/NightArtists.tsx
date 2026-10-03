@@ -1,11 +1,15 @@
 import Link from "next/link";
 import { archiveArtists } from "@/content/nightlife";
+import { getFeaturedNightArtists } from "@/lib/cms/nightlife";
 import styles from "./NightWorld.module.css";
 
-export function NightArtists() {
+export async function NightArtists() {
+  const cmsArtists = await getFeaturedNightArtists();
+  const artists = cmsArtists.length ? cmsArtists : archiveArtists;
+
   return (
     <div className={styles.artistRail}>
-      {archiveArtists.map((artist, index) => (
+      {artists.map((artist, index) => (
         <Link
           className={styles.artistLink}
           href={"/artisti/" + artist.slug + "/"}
