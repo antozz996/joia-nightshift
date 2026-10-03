@@ -500,6 +500,12 @@ html[data-custom-cursor="true"] .custom-cursor {
   .custom-cursor {
     display: none;
   }
+
+  .film-grain {
+    animation: none;
+    opacity: 0.028;
+    mix-blend-mode: normal;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
