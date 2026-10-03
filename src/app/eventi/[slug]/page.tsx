@@ -5,9 +5,12 @@ import { NightFooter } from "@/components/nightlife/NightFooter";
 import { NightMotionController } from "@/components/nightlife/NightMotionController";
 import { NightNav } from "@/components/nightlife/NightNav";
 import { NightlifeLeadForm } from "@/components/nightlife/NightlifeLeadForm";
+import { StructuredData } from "@/components/seo/StructuredData";
 import styles from "@/components/nightlife/NightWorld.module.css";
 import { findNightFormat, nightlifeFormats } from "@/content/nightlife";
 import { getNightEventBySlug } from "@/lib/cms/nightlife";
+import { absoluteUrl } from "@/lib/seo/site-url";
+import { musicEventSchema } from "@/lib/seo/schema";
 
 type PageProps = { params: Promise<{ slug: string }> };
 
@@ -38,6 +41,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description:
         event.seoDescription ??
         ("Evento JOIA / FORMĀ a Napoli — " + formatEventDate(event.startsAt)),
+      alternates: { canonical: absoluteUrl("/eventi/" + slug + "/") },
+      openGraph: {
+        type: "article",
+        title: event.title + " | JOIA / FORMĀ",
+        description:
+          event.seoDescription ??
+          ("Evento JOIA / FORMĀ a Napoli — " + formatEventDate(event.startsAt)),
+        url: absoluteUrl("/eventi/" + slug + "/"),
+      },
     };
   }
 
@@ -45,6 +57,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return {
       title: archive.name + " — Archivio JOIA",
       description: archive.description,
+      alternates: { canonical: absoluteUrl("/eventi/" + slug + "/") },
     };
   }
 
@@ -69,6 +82,8 @@ export default async function EventPage({ params }: PageProps) {
     <div data-world="night">
       <NightMotionController />
       <NightNav />
+
+      {event ? <StructuredData data={musicEventSchema(event)} id="music-event-schema" /> : null}
 
       <main className={styles.page}>
         <section className={styles.detailHero}>
