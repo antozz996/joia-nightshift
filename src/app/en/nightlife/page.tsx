@@ -1,0 +1,51 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import styles from "@/components/seo/LocaleLanding.module.css";
+import { absoluteUrl } from "@/lib/seo/site-url";
+
+export const metadata: Metadata = {
+  title: "FORMĀ / Nightlife in Naples",
+  description:
+    "JOIA nightlife in Naples: music, artists, events, tickets, tables and community through FORMĀ.",
+  alternates: {
+    canonical: absoluteUrl("/en/nightlife/"),
+    languages: {
+      "it-IT": absoluteUrl("/nightlife/"),
+      "en-GB": absoluteUrl("/en/nightlife/"),
+      "x-default": absoluteUrl("/nightlife/"),
+    },
+  },
+  other: { "content-language": "en" },
+};
+
+export default function EnglishNightlifePage() {
+  return (
+    <main className={styles.page + " " + styles.night}>
+      <p className={styles.eyebrow}>FORMĀ / LISTENING HOUSE / NAPLES</p>
+      <h1 className={styles.title}>The night takes shape.</h1>
+      <p className={styles.copy}>
+        Music, artists, community and production. The live Italian nightlife page carries
+        the next event, tickets, tables, guest list and the JOIA archive.
+      </p>
+      <div className={styles.links}>
+        <Link href="/nightlife/">Open live nightlife page</Link>
+        <Link href="/nightlife/#community">Join the community</Link>
+        <Link href="/nightlife/">Italiano</Link>
+      </div>
+      <div className={styles.details}>
+        <div className={styles.detail}>
+          <strong>Next</strong>
+          <span>CMS-driven event publishing</span>
+        </div>
+        <div className={styles.detail}>
+          <strong>Access</strong>
+          <span>Tickets · Tables · Guest list</span>
+        </div>
+        <div className={styles.detail}>
+          <strong>Archive</strong>
+          <span>Artists · Flyers · Formats</span>
+        </div>
+      </div>
+    </main>
+  );
+}
