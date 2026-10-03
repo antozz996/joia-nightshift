@@ -55,3 +55,8 @@ Consulta `ARCHITECTURE.md` e `PHASE1_DESIGN_SYSTEM.md`.
 ## Nota font
 
 I font vengono caricati con `next/font/google`: durante la build Next li scarica e li self-hosta. Il browser finale non dipende da Google Fonts a runtime.
+
+
+## Drive media curation
+
+2026-10-03: analizzati 46 asset reali JOIA / FORMĀ dal Drive; selezione fotografica integrata nel sito e report completo disponibile in `MEDIA_AUDIT_DRIVE_2026-10-03.md`.
