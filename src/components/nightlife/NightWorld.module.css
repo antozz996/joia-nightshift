@@ -940,3 +940,39 @@
     transition: none;
   }
 }
+
+
+/* Curated real FORMĀ media — Drive review 2026-10-03 */
+.nextMedia {
+  object-fit: cover;
+  object-position: center;
+  filter: saturate(.72) contrast(1.15) brightness(.58);
+  transform: scale(1.02);
+}
+
+.nextMediaShade {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 72% 20%, rgba(215,255,0,.08), transparent 24rem),
+    linear-gradient(180deg, rgba(7,8,6,.12), rgba(7,8,6,.72) 72%, rgba(7,8,6,.9));
+}
+
+.nextCard::before {
+  z-index: 2;
+}
+
+.leadIntro::before {
+  content: "";
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  margin-bottom: 1.4rem;
+  border: 1px solid rgba(233,236,225,.12);
+  background:
+    linear-gradient(180deg, rgba(7,8,6,.08), rgba(7,8,6,.46)),
+    url("/media/nightlife/forma-community.jpg") center 52% / cover no-repeat;
+  filter: saturate(.72) contrast(1.12);
+}
