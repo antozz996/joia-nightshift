@@ -25,7 +25,7 @@ export default function PrivateEventsPage() {
         intro="JOIA non è un nightclub da prendere in affitto. È uno spazio con una storia, una regia e una capacità precisa: cambiare atmosfera, ritmo e disposizione intorno alle persone."
       />
 
-      <section className={styles.section} id="formati">
+      <section className={styles.section + " " + styles.sectionSoft} id="formati">
         <div className={styles.sectionHeader} data-private-reveal>
           <p className={styles.eyebrow}>01 / Scegli il motivo</p>
           <div>
@@ -39,11 +39,13 @@ export default function PrivateEventsPage() {
         <PrivateTypeCards />
       </section>
 
-      <section className={styles.section} id="layout">
+      <section className={styles.section + " " + styles.sectionWarm} id="layout">
         <div className={styles.sectionHeader} data-private-reveal>
           <p className={styles.eyebrow}>02 / Configura lo spazio</p>
           <div>
-            <h2 className={styles.sectionTitle}>Cena. Cocktail. Party.</h2>
+            <h2 className={styles.sectionTitle}>
+              Cena. Cocktail.<br />Party.
+            </h2>
             <p className={styles.sectionText}>
               Tre modi diversi di occupare la sala. Il configuratore racconta la logica del
               layout; le capienze ufficiali verranno pubblicate solo dopo validazione della
@@ -54,29 +56,29 @@ export default function PrivateEventsPage() {
         <PrivateConfigurator />
       </section>
 
-      <section className={styles.section} id="trasformazione">
+      <section className={styles.section + " " + styles.sectionBronze} id="trasformazione">
         <div className={styles.sectionHeader} data-private-reveal>
           <p className={styles.eyebrow}>03 / Trasformazione</p>
           <div>
             <h2 className={styles.sectionTitle}>Non decorare lo spazio. Cambiarlo.</h2>
             <p className={styles.sectionText}>
-              Trascina il controllo: oggi il confronto è generativo, domani ospiterà le
-              riprese reali della sala neutra e della stessa sala trasformata.
+              Trascina il controllo per leggere la trasformazione: dalla struttura più
+              neutra a una sala realmente allestita, con luce, tavoli e atmosfera JOIA.
             </p>
           </div>
         </div>
         <PrivateBeforeAfter />
       </section>
 
-      <section className={styles.section} id="gallery">
+      <section className={styles.section + " " + styles.sectionGallery} id="gallery">
         <div className={styles.sectionHeader} data-private-reveal>
           <p className={styles.eyebrow}>04 / Atmosfera</p>
           <div>
             <h2 className={styles.sectionTitle}>Materiale vero, trattato come un editoriale.</h2>
             <p className={styles.sectionText}>
-              Gli slot sono già pronti per foto da telefono, immagini professionali e clip
-              verticali. Finché non carichiamo il materiale JOIA, il sistema resta coerente
-              usando composizioni generative.
+              Qui usiamo materiale JOIA reale: ospiti, tavoli, catering, performance e
+              dancefloor. Le immagini cambiano in base al tipo di evento senza ricorrere a
+              fotografie stock.
             </p>
           </div>
         </div>
@@ -85,7 +87,7 @@ export default function PrivateEventsPage() {
 
       <FaqSection items={privateFaqs} world="private" />
 
-      <section className={styles.section} id="brief">
+      <section className={styles.section + " " + styles.sectionBrief} id="brief">
         <div className={styles.briefShell}>
           <div className={styles.briefIntro} data-private-reveal>
             <p className={styles.eyebrow}>05 / Il tuo evento</p>
