@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { PrivateBeforeAfter } from "@/components/private/PrivateBeforeAfter";
+import { PrivateTransformation } from "@/components/private/PrivateTransformation";
 import { PrivateBriefForm } from "@/components/private/PrivateBriefForm";
 import { PrivateConfigurator } from "@/components/private/PrivateConfigurator";
 import { PrivateGallery } from "@/components/private/PrivateGallery";
@@ -60,14 +60,14 @@ export default function PrivateEventsPage() {
         <div className={styles.sectionHeader} data-private-reveal>
           <p className={styles.eyebrow}>03 / Trasformazione</p>
           <div>
-            <h2 className={styles.sectionTitle}>Non decorare lo spazio. Cambiarlo.</h2>
+            <h2 className={styles.sectionTitle}>Non decorare lo spazio. Cambiarne il ritmo.</h2>
             <p className={styles.sectionText}>
-              Non mostriamo un prima e dopo artificiale. Seguiamo tre modi reali in cui
-              la stessa sala cambia presenza: tavola, cocktail e party.
+              La trasformazione non è un effetto grafico: si legge nei tavoli, nella luce,
+              nella produzione e nel modo in cui la sala passa dall’accoglienza al party.
             </p>
           </div>
         </div>
-        <PrivateBeforeAfter />
+        <PrivateTransformation />
       </section>
 
       <section className={styles.section + " " + styles.sectionGallery} id="gallery">
