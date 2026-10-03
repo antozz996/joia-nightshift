@@ -86,3 +86,16 @@ export async function getNightArtistBySlug(
     { next: { revalidate: 600 } },
   );
 }
+
+export async function getNightEventsForArtist(
+  slug: string,
+): Promise<NightEventRecord[]> {
+  const client = getOptionalClient();
+  if (!client) return [];
+
+  return client.fetch<NightEventRecord[]>(
+    '*[_type == "event" && references(*[_type == "artist" && slug.current == $slug]._id)] | order(startsAt desc)[0...12]{title,"slug":slug.current,startsAt,subtitle,ticketUrl,tableUrl,guestListEnabled,"artists":artists[]->{name,"slug":slug.current},seoDescription}',
+    { slug },
+    { next: { revalidate: 600 } },
+  );
+}
