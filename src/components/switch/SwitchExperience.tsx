@@ -1,66 +1,29 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import type {
-  CSSProperties,
-  MouseEvent as ReactMouseEvent,
-  PointerEvent as ReactPointerEvent,
-} from "react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import type { MouseEvent as ReactMouseEvent } from "react";
+import { useEffect, useState } from "react";
 import { resolveNightshiftTime } from "@/lib/time/nightshift-time";
-import { SwitchMediaStage } from "./SwitchMediaStage";
 import styles from "./SwitchExperience.module.css";
 
-type PointerPosition = { x: number; y: number };
+type World = "private" | "night";
 
-type DragState = {
-  active: boolean;
-  pointerId: number | null;
-  pointerType: string;
-  startX: number;
-  startY: number;
-  startMix: number;
-  moved: number;
-};
-
-function phaseToMix() {
+function venueWorld(): World {
   const phase = resolveNightshiftTime().phase;
-  if (phase === "day") return 0.16;
-  if (phase === "dawn") return 0.08;
-  if (phase === "golden") return 0.42;
-  if (phase === "night") return 0.78;
-  return 0.9;
-}
-
-function clamp(value: number) {
-  return Math.max(0, Math.min(1, value));
+  return phase === "night" || phase === "deep" ? "night" : "private";
 }
 
 export function SwitchExperience() {
   const router = useRouter();
-  const [mix, setMix] = useState(0.5);
-  const [pointer, setPointer] = useState<PointerPosition>({ x: 0.5, y: 0.48 });
+  const [active, setActive] = useState<World>("private");
   const [clock, setClock] = useState("--:--");
-  const [leaving, setLeaving] = useState(false);
-  const [touchMode, setTouchMode] = useState(false);
-
-  const dragRef = useRef<DragState>({
-    active: false,
-    pointerId: null,
-    pointerType: "",
-    startX: 0,
-    startY: 0,
-    startMix: 0.5,
-    moved: 0,
-  });
-
-  const mixFrameRef = useRef(0);
-  const pendingMixRef = useRef<number | null>(null);
+  const [entering, setEntering] = useState<World | null>(null);
 
   useEffect(() => {
     const syncVenueState = () => {
-      setMix(phaseToMix());
+      setActive(venueWorld());
       setClock(
         new Intl.DateTimeFormat("it-IT", {
           timeZone: "Europe/Rome",
@@ -80,159 +43,24 @@ export function SwitchExperience() {
     };
   }, []);
 
-  useEffect(() => {
-    const coarse = window.matchMedia("(pointer: coarse)");
-    const compact = window.matchMedia("(max-width: 767px)");
+  const enter = (world: World, href: string) => {
+    if (entering) return;
 
-    const syncInputMode = () => {
-      setTouchMode(
-        coarse.matches ||
-          compact.matches ||
-          navigator.maxTouchPoints > 0,
-      );
-    };
-
-    syncInputMode();
-    coarse.addEventListener("change", syncInputMode);
-    compact.addEventListener("change", syncInputMode);
-
-    return () => {
-      coarse.removeEventListener("change", syncInputMode);
-      compact.removeEventListener("change", syncInputMode);
-    };
-  }, []);
-
-  useEffect(() => {
-    return () => {
-      if (mixFrameRef.current) {
-        window.cancelAnimationFrame(mixFrameRef.current);
-      }
-    };
-  }, []);
-
-  const cssVars = useMemo(
-    () =>
-      ({
-        "--switch-mix": mix,
-        "--pointer-x": String(pointer.x * 100) + "%",
-        "--pointer-y": String(pointer.y * 100) + "%",
-      }) as CSSProperties,
-    [mix, pointer],
-  );
-
-  const queueMix = (value: number) => {
-    pendingMixRef.current = value;
-    if (mixFrameRef.current) return;
-
-    mixFrameRef.current = window.requestAnimationFrame(() => {
-      mixFrameRef.current = 0;
-      if (pendingMixRef.current === null) return;
-      setMix(pendingMixRef.current);
-      pendingMixRef.current = null;
-    });
-  };
-
-  const updatePointerPosition = (event: ReactPointerEvent<HTMLElement>) => {
-    if (touchMode || event.pointerType === "touch") return;
-
-    const rect = event.currentTarget.getBoundingClientRect();
-    setPointer({
-      x: clamp((event.clientX - rect.left) / Math.max(rect.width, 1)),
-      y: clamp((event.clientY - rect.top) / Math.max(rect.height, 1)),
-    });
-  };
-
-  const navigate = (href: string) => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduced || touchMode) {
+
+    setActive(world);
+
+    if (reduced) {
       router.push(href);
       return;
     }
 
-    setLeaving(true);
-    window.setTimeout(() => router.push(href), 430);
-  };
-
-  const onPointerDown = (event: ReactPointerEvent<HTMLElement>) => {
-    if ((event.target as HTMLElement).closest("a")) return;
-
-    event.currentTarget.setPointerCapture(event.pointerId);
-    dragRef.current = {
-      active: true,
-      pointerId: event.pointerId,
-      pointerType: event.pointerType,
-      startX: event.clientX,
-      startY: event.clientY,
-      startMix: mix,
-      moved: 0,
-    };
-
-    updatePointerPosition(event);
-  };
-
-  const onPointerMove = (event: ReactPointerEvent<HTMLElement>) => {
-    const drag = dragRef.current;
-    const isTouch =
-      event.pointerType === "touch" ||
-      drag.pointerType === "touch" ||
-      touchMode;
-
-    if (!isTouch) {
-      updatePointerPosition(event);
-    }
-
-    if (!drag.active || drag.pointerId !== event.pointerId) {
-      if ((event.target as HTMLElement).closest("a")) return;
-
-      if (!isTouch && event.pointerType === "mouse") {
-        const rect = event.currentTarget.getBoundingClientRect();
-        const hoverMix = clamp((event.clientX - rect.left) / Math.max(rect.width, 1));
-        queueMix(mix * 0.88 + hoverMix * 0.12);
-      }
-      return;
-    }
-
-    const dx = event.clientX - drag.startX;
-    const dy = event.clientY - drag.startY;
-    drag.moved = Math.max(drag.moved, Math.hypot(dx, dy));
-
-    const delta = isTouch
-      ? -dy / Math.max(window.innerHeight * 0.68, 1)
-      : dx / Math.max(window.innerWidth * 0.55, 1);
-
-    queueMix(clamp(drag.startMix + delta));
-  };
-
-  const finishDrag = (event: ReactPointerEvent<HTMLElement>) => {
-    const drag = dragRef.current;
-    if (!drag.active || drag.pointerId !== event.pointerId) return;
-
-    drag.active = false;
-    drag.pointerId = null;
-
-    const isTouch =
-      drag.pointerType === "touch" ||
-      touchMode;
-
-    const dx = event.clientX - drag.startX;
-    const dy = event.clientY - drag.startY;
-    const finalMix = clamp(
-      drag.startMix +
-        (isTouch
-          ? -dy / Math.max(window.innerHeight * 0.68, 1)
-          : dx / Math.max(window.innerWidth * 0.55, 1)),
-    );
-
-    if (drag.moved > 34) {
-      setMix(finalMix >= 0.5 ? 0.94 : 0.06);
-      return;
-    }
-
-    setMix(finalMix >= 0.5 ? 0.82 : 0.18);
+    setEntering(world);
+    window.setTimeout(() => router.push(href), 560);
   };
 
   const intercept =
-    (href: string) =>
+    (world: World, href: string) =>
     (event: ReactMouseEvent<HTMLAnchorElement>) => {
       if (
         event.metaKey ||
@@ -245,103 +73,145 @@ export function SwitchExperience() {
       }
 
       event.preventDefault();
-      navigate(href);
+      enter(world, href);
     };
 
   return (
     <main
-      className={styles.stage + (leaving ? " " + styles.leaving : "")}
-      style={cssVars}
-      onPointerDown={onPointerDown}
-      onPointerMove={onPointerMove}
-      onPointerUp={finishDrag}
-      onPointerCancel={finishDrag}
-      data-world="switch"
-      data-input={touchMode ? "touch" : "pointer"}
+      className={styles.stage}
+      data-active={active}
+      data-entering={entering ?? "none"}
       aria-label="Scegli l'esperienza JOIA"
     >
-      <div className={styles.media}>
-        <SwitchMediaStage mix={mix} pointer={pointer} />
+      <header className={styles.header}>
+        <div className={styles.brand}>
+          <span className={styles.brandMark} aria-hidden="true">J</span>
+          <span>JOIA</span>
+        </div>
+
+        <div className={styles.headerMeta}>
+          <span>Sant’Antimo · Napoli</span>
+          <time>{clock}</time>
+        </div>
+      </header>
+
+      <section className={styles.threshold} aria-labelledby="threshold-title">
+        <h1 className={styles.srTitle} id="threshold-title">
+          JOIA — scegli tra Private Events e FORMĀ Nightlife
+        </h1>
+
+        <Link
+          href="/private-events/"
+          className={styles.portal + " " + styles.privatePortal}
+          onMouseEnter={() => !entering && setActive("private")}
+          onFocus={() => !entering && setActive("private")}
+          onClick={intercept("private", "/private-events/")}
+          aria-label="Entra in JOIA Private Events"
+        >
+          <Image
+            className={styles.portalImage}
+            src="/media/private/hero-dinner.jpg"
+            alt="Allestimento tavola JOIA Private Events"
+            fill
+            priority
+            sizes="(max-width: 767px) 100vw, 55vw"
+          />
+          <span className={styles.privateTone} aria-hidden="true" />
+
+          <span className={styles.portalTop}>
+            <span>01</span>
+            <span>Private Events</span>
+          </span>
+
+          <span className={styles.portalCopy}>
+            <span className={styles.portalEyebrow}>Giorno / Evento / Trasformazione</span>
+            <strong className={styles.privateTitle}>La sala cambia intorno a te.</strong>
+            <span className={styles.portalDescription}>
+              Lauree, 18 anni, compleanni e corporate. Luce calda, materia, ritmo su misura.
+            </span>
+          </span>
+
+          <span className={styles.portalAction}>
+            Entra nel Private
+            <span aria-hidden="true">↗</span>
+          </span>
+        </Link>
+
+        <div className={styles.hinge} aria-hidden="true">
+          <span className={styles.hingeLine} />
+          <span className={styles.hingeBadge}>JOIA</span>
+          <span className={styles.hingeLine} />
+        </div>
+
+        <Link
+          href="/nightlife/"
+          className={styles.portal + " " + styles.nightPortal}
+          onMouseEnter={() => !entering && setActive("night")}
+          onFocus={() => !entering && setActive("night")}
+          onClick={intercept("night", "/nightlife/")}
+          aria-label="Entra in FORMĀ Nightlife"
+        >
+          <Image
+            className={styles.portalImage}
+            src="/media/nightlife/forma-hero.jpg"
+            alt="Sala FORMĀ con pubblico e sfera luminosa"
+            fill
+            priority
+            sizes="(max-width: 767px) 100vw, 55vw"
+          />
+          <span className={styles.nightTone} aria-hidden="true" />
+
+          <span className={styles.portalTop}>
+            <span>02</span>
+            <span>FORMĀ / Nightlife</span>
+          </span>
+
+          <span className={styles.portalCopy}>
+            <span className={styles.portalEyebrow}>Notte / Musica / Community</span>
+            <strong className={styles.nightTitle}>La notte prende forma.</strong>
+            <span className={styles.portalDescription}>
+              Artisti, dancefloor, community e produzione. Più densa, più veloce, più vicina.
+            </span>
+          </span>
+
+          <span className={styles.portalAction}>
+            Entra in FORMĀ
+            <span aria-hidden="true">↗</span>
+          </span>
+        </Link>
+      </section>
+
+      <footer className={styles.footer}>
+        <span>Due porte. Una sola casa.</span>
+        <span className={styles.footerHint}>Scegli un mondo per attraversare la soglia</span>
+      </footer>
+
+      <div className={styles.transitionPrivate} aria-hidden="true">
+        <Image
+          src="/media/private/hero-dinner.jpg"
+          alt=""
+          fill
+          sizes="100vw"
+          className={styles.transitionImage}
+        />
+        <span className={styles.transitionPrivateTone} />
+        <span className={styles.transitionWord + " " + styles.transitionWordPrivate}>
+          Private
+        </span>
       </div>
 
-      <div className={styles.shell}>
-        <header className={styles.header}>
-          <div className={styles.brand}>
-            <span className={styles.statusDot} aria-hidden="true" />
-            <span>JOIA / NIGHTSHIFT</span>
-          </div>
-          <time className={styles.clock}>Napoli — {clock}</time>
-        </header>
-
-        <section className={styles.hero} aria-labelledby="switch-title">
-          <div className={styles.copy}>
-            <p className={styles.eyebrow}>
-              Napoli · oltre 20 anni di club culture · un luogo, due trasformazioni
-            </p>
-            <h1 className={styles.title} id="switch-title">
-              Cambia
-              <em>con la luce.</em>
-            </h1>
-            <p className={styles.intro}>
-              Di giorno JOIA si costruisce intorno al tuo evento. Quando la luce scende,
-              FORMĀ prende il controllo: musica, artisti, community e notte.
-            </p>
-          </div>
-
-          <aside className={styles.readout} aria-hidden="true">
-            <div className={styles.number}>20+</div>
-            <div className={styles.axis} />
-            <div className={styles.axisLabels}>
-              <span>Private</span>
-              <span>FORMĀ</span>
-            </div>
-          </aside>
-        </section>
-
-        <nav className={styles.choices} aria-label="Esperienze JOIA">
-          <Link
-            href="/private-events/"
-            className={styles.choice + " " + styles.choicePrivate}
-            onPointerEnter={() => {
-              if (!touchMode) setMix(0.06);
-            }}
-            onFocus={() => setMix(0.06)}
-            onClick={intercept("/private-events/")}
-          >
-            <span className={styles.choiceMeta}>
-              <span>01 / Giorno</span>
-              <span>Napoli ↗</span>
-            </span>
-            <span className={styles.choiceTitle}>Private Events</span>
-          </Link>
-
-          <Link
-            href="/nightlife/"
-            className={styles.choice + " " + styles.choiceNight}
-            onPointerEnter={() => {
-              if (!touchMode) setMix(0.94);
-            }}
-            onFocus={() => setMix(0.94)}
-            onClick={intercept("/nightlife/")}
-          >
-            <span className={styles.choiceMeta}>
-              <span>02 / Notte</span>
-              <span>FORMĀ ↗</span>
-            </span>
-            <span className={styles.choiceTitle}>Nightlife / FORMĀ</span>
-          </Link>
-        </nav>
-
-        <footer className={styles.footer}>
-          <span>Trascina per cambiare luce</span>
-          <span>Private ↔ Nightlife</span>
-        </footer>
-      </div>
-
-      <div className={styles.dragHint} aria-hidden="true">
-        {touchMode
-          ? "Scorri ↑↓ per cambiare · tocca per entrare"
-          : "Desktop: trascina · passa sulle scelte"}
+      <div className={styles.transitionNight} aria-hidden="true">
+        <Image
+          src="/media/nightlife/forma-hero.jpg"
+          alt=""
+          fill
+          sizes="100vw"
+          className={styles.transitionImage}
+        />
+        <span className={styles.transitionNightTone} />
+        <span className={styles.transitionWord + " " + styles.transitionWordNight}>
+          FORMĀ
+        </span>
       </div>
     </main>
   );
