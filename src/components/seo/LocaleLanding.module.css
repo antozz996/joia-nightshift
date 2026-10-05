@@ -141,3 +141,46 @@
     grid-template-columns: 1fr;
   }
 }
+
+
+.locationVisual {
+  position: relative;
+  margin: .5rem 0 0;
+  width: min(100%, 72rem);
+  min-height: clamp(20rem, 46vw, 40rem);
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.22);
+  background: #0b0c09;
+}
+
+.locationVisual img {
+  object-fit: cover;
+  object-position: center;
+  filter: saturate(.76) contrast(1.08) brightness(.76);
+}
+
+.locationVisual::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 55%, rgba(7,8,6,.58));
+  pointer-events: none;
+}
+
+.locationVisual figcaption {
+  position: absolute;
+  z-index: 2;
+  left: .85rem;
+  bottom: .85rem;
+  font-family: var(--font-night-mono), monospace;
+  font-size: .62rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+@media (max-width: 700px) {
+  .locationVisual {
+    min-height: 19rem;
+  }
+}

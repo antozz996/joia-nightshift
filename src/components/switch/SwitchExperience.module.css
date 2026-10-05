@@ -190,7 +190,7 @@
 }
 
 .portalNight::before {
-  background-image: url("/media/nightlife/forma-hero.jpg");
+  background-image: url("/media/nightlife/official/forma-room-red.jpg");
   background-position: center;
   filter: saturate(.74) contrast(1.15) brightness(.62);
 }
@@ -412,7 +412,7 @@
 
 .transitionNight {
   color: #f4f7ef;
-  background-image: url("/media/nightlife/forma-hero.jpg");
+  background-image: url("/media/nightlife/official/forma-room-red.jpg");
 }
 
 .transitionNight::before {
@@ -629,4 +629,34 @@
   opacity: 1;
   text-decoration: underline;
   text-underline-offset: .25em;
+}
+
+
+.headerLogo {
+  display: inline-block;
+  width: 7.7rem;
+  height: 1.85rem;
+  background-image: url("/media/brand/joia-logo.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 166% auto;
+  filter: invert(1);
+}
+
+.buildingLabel {
+  margin-left: -.15rem;
+  font-size: .58rem;
+  letter-spacing: .18em;
+  opacity: .7;
+}
+
+@media (max-width: 767px), (pointer: coarse) {
+  .headerLogo {
+    width: 6.2rem;
+    height: 1.5rem;
+  }
+
+  .buildingLabel {
+    display: none;
+  }
 }

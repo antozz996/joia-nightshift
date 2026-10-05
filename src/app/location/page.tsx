@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import styles from "@/components/seo/LocaleLanding.module.css";
 import { siteConfig } from "@/config/site";
@@ -20,6 +21,17 @@ export default function LocationPage() {
         JOIA mette nello stesso spazio Private Events e nightlife senza confonderli: cambia
         il ritmo, cambia la luce, cambia il modo in cui la sala viene vissuta.
       </p>
+
+      <figure className={styles.locationVisual}>
+        <Image
+          src="/media/nightlife/official/forma-room-amber.jpg"
+          alt="Interno JOIA Building durante una serata FORMĀ"
+          fill
+          priority
+          sizes="(max-width: 900px) 100vw, 70vw"
+        />
+        <figcaption>JOIA Building · Sant’Antimo · Napoli</figcaption>
+      </figure>
 
       <div className={styles.details}>
         <div className={styles.detail}>

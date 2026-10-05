@@ -20,13 +20,24 @@ const offers = [
   },
 ] as const;
 
+const foodDetails = [
+  {
+    src: "/media/nightlife/official/forma-food-bowl.jpg",
+    alt: "Finger food FORMĀ",
+  },
+  {
+    src: "/media/nightlife/official/forma-food-detail.jpg",
+    alt: "Dettaglio food FORMĀ con fiamma",
+  },
+] as const;
+
 export function NightDinner() {
   return (
     <div className={styles.dinnerShell}>
       <div className={styles.dinnerVisual}>
         <Image
-          src="/media/private/dish.jpg"
-          alt="Dettaglio food durante un evento JOIA"
+          src="/media/nightlife/official/forma-food-fire.jpg"
+          alt="Servizio food FORMĀ con fiamma"
           fill
           sizes="(max-width: 900px) 100vw, 48vw"
           className={styles.dinnerImage}
@@ -39,6 +50,19 @@ export function NightDinner() {
       </div>
 
       <div className={styles.dinnerOffers}>
+        <div className={styles.dinnerDetails}>
+          {foodDetails.map((item) => (
+            <figure className={styles.dinnerDetail} key={item.src}>
+              <Image
+                src={item.src}
+                alt={item.alt}
+                fill
+                sizes="(max-width: 900px) 50vw, 20vw"
+              />
+            </figure>
+          ))}
+        </div>
+
         {offers.map((offer) => (
           <article className={styles.dinnerOffer} key={offer.index}>
             <span>{offer.index}</span>
@@ -46,6 +70,7 @@ export function NightDinner() {
             <p>{offer.copy}</p>
           </article>
         ))}
+
         <div className={styles.dinnerActions}>
           <Link className={styles.primaryButton} href="#community">
             Richiedi dinner / tavolo
