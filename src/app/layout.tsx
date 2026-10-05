@@ -39,12 +39,12 @@ const nightMono = IBM_Plex_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
-  applicationName: "JOIA",
+  applicationName: "JOIA Building",
   title: {
-    default: "JOIA — Napoli",
+    default: "JOIA Building — Napoli",
     template: "%s | JOIA",
   },
-  description: "JOIA è un ecosistema per nightlife, musica ed eventi privati a Napoli.",
+  description: "JOIA Building a Napoli: Private Events e FORMĀ / Nightlife, dal 2004.",
   manifest: "/manifest.webmanifest",
   robots: {
     index: true,
@@ -53,14 +53,14 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "it_IT",
-    siteName: "JOIA",
-    title: "JOIA — Private Events & FORMĀ Nightlife a Napoli",
+    siteName: "JOIA Building",
+    title: "JOIA Building — Private Events & FORMĀ Nightlife a Napoli",
     description:
       "Un unico spazio, due trasformazioni: Private Events e FORMĀ / Nightlife.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "JOIA — Napoli",
+    title: "JOIA Building — Napoli",
     description: "Private Events e FORMĀ / Nightlife.",
   },
 };
