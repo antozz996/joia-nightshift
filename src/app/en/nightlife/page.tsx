@@ -24,8 +24,8 @@ export default function EnglishNightlifePage() {
       <p className={styles.eyebrow}>FORMĀ / MUSIC · SHOWS / NAPLES</p>
       <h1 className={styles.title}>The night takes shape.</h1>
       <p className={styles.copy}>
-        Music, artists, community and production. The live Italian nightlife page carries
-        the next event, tickets, tables, guest list and the JOIA archive.
+        Music, shows, dinner and community. FORMĀ is the contemporary nightlife language
+        of JOIA Building, connecting the venue’s heritage with its next chapter.
       </p>
       <div className={styles.links}>
         <Link href="/nightlife/">Open live nightlife page</Link>
