@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import styles from "./History.module.css";
 import { archiveArtists } from "@/content/nightlife";
@@ -51,6 +52,28 @@ export default function HistoryPage() {
           JOIA nasce come landmark club e oggi vive come building trasformabile: una storia
           fatta di suono, luce, performance, ospiti e modi diversi di vivere la stessa sala.
         </p>
+
+        <section className={styles.photoArchive} aria-label="Archivio fotografico JOIA">
+          <figure className={styles.photoLarge}>
+            <Image
+              src="/media/nightlife/official/forma-crowd-amber.jpg"
+              alt="Crowd JOIA / FORMĀ nella sala illuminata in ambra"
+              fill
+              priority
+              sizes="(max-width: 800px) 100vw, 62vw"
+            />
+            <figcaption>Room / Crowd / Sant’Antimo</figcaption>
+          </figure>
+          <figure className={styles.photoSmall}>
+            <Image
+              src="/media/nightlife/official/forma-room-amber.jpg"
+              alt="Sala JOIA / FORMĀ con installazione luminosa"
+              fill
+              sizes="(max-width: 800px) 100vw, 32vw"
+            />
+            <figcaption>Building / Light / Archive</figcaption>
+          </figure>
+        </section>
 
         <section className={styles.statement}>
           <p className={styles.eyebrow}>La continuità</p>
