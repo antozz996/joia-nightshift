@@ -973,7 +973,7 @@
   border: 1px solid rgba(233,236,225,.12);
   background:
     linear-gradient(180deg, rgba(7,8,6,.08), rgba(7,8,6,.46)),
-    url("/media/nightlife/forma-community.jpg") center 52% / cover no-repeat;
+    url("/media/nightlife/official/forma-crowd-amber.jpg") center 52% / cover no-repeat;
   filter: saturate(.72) contrast(1.12);
 }
 
@@ -1124,5 +1124,34 @@
 
   .dinnerVisual {
     min-height: 24rem;
+  }
+}
+
+
+.dinnerDetails {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .55rem;
+  padding-bottom: .9rem;
+  border-bottom: 1px solid rgba(233,236,225,.16);
+}
+
+.dinnerDetail {
+  position: relative;
+  margin: 0;
+  min-height: 11rem;
+  overflow: hidden;
+  border: 1px solid rgba(233,236,225,.12);
+  background: #0b0c09;
+}
+
+.dinnerDetail img {
+  object-fit: cover;
+  filter: saturate(.82) contrast(1.08) brightness(.82);
+}
+
+@media (max-width: 600px) {
+  .dinnerDetail {
+    min-height: 8.5rem;
   }
 }
