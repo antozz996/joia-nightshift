@@ -87,21 +87,21 @@ export function SwitchExperience() {
       <header className={styles.header}>
         <div className={styles.headerBrand}>
           <span className={styles.statusDot} aria-hidden="true" />
-          <span>JOIA</span>
+          <span>JOIA BUILDING</span>
         </div>
-        <p className={styles.headerMeta}>Napoli · Since 2004</p>
+        <p className={styles.headerMeta}><Link href="/storia/">Sant’Antimo · Napoli · Since 2004</Link></p>
         <time className={styles.clock}>Napoli — {clock}</time>
       </header>
 
       <section className={styles.intro} aria-labelledby="threshold-title">
-        <p className={styles.kicker}>Un luogo. Due trasformazioni.</p>
+        <p className={styles.kicker}>Dal 2004. Un edificio. Due modi di viverlo.</p>
         <h1 className={styles.title} id="threshold-title">
           Entra in
           <span>JOIA.</span>
         </h1>
         <p className={styles.lead}>
-          Scegli la forma che vuoi vivere. Lo spazio resta lo stesso,
-          cambia completamente il modo in cui prende vita.
+          JOIA Building unisce design, tecnologia e produzione in uno spazio
+          capace di cambiare completamente in base all’esperienza.
         </p>
       </section>
 
@@ -129,7 +129,7 @@ export function SwitchExperience() {
           <span className={styles.portalIndex}>01</span>
           <span className={styles.portalWorld}>Private Events</span>
           <span className={styles.portalCopy}>
-            <strong>Costruisci il tuo evento.</strong>
+            <strong>Lo spazio prende la tua forma.</strong>
             <span>
               Cena, cocktail, party e produzione: JOIA cambia assetto intorno alle persone.
             </span>
@@ -154,9 +154,9 @@ export function SwitchExperience() {
           <span className={styles.portalIndex}>02</span>
           <span className={styles.portalWorld}>FORMĀ / Nightlife</span>
           <span className={styles.portalCopy}>
-            <strong>Entra nella notte.</strong>
+            <strong>La notte prende forma.</strong>
             <span>
-              Musica, artisti, community e luce: quando scende il buio, la sala cambia ritmo.
+              Music, shows, club culture, dinner e community: FORMĀ è il linguaggio notturno contemporaneo di JOIA.
             </span>
           </span>
           <span className={styles.portalAction}>Attraversa la soglia ↗</span>
@@ -169,7 +169,7 @@ export function SwitchExperience() {
 
       <footer className={styles.footer}>
         <span>Private Events</span>
-        <span>Scegli un ingresso</span>
+        <span>Since 2004 · Storia ↗</span>
         <span>FORMĀ / Nightlife</span>
       </footer>
 
