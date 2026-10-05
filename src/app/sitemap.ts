@@ -52,6 +52,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       },
     },
     {
+      url: absoluteUrl("/storia/"),
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.82,
+      alternates: {
+        languages: {
+          "it-IT": absoluteUrl("/storia/"),
+          "en-GB": absoluteUrl("/en/history/"),
+        },
+      },
+    },
+    {
       url: absoluteUrl("/location/"),
       lastModified: now,
       changeFrequency: "monthly",
@@ -80,6 +92,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: now,
       changeFrequency: "daily",
       priority: 0.7,
+    },
+    {
+      url: absoluteUrl("/en/history/"),
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.62,
     },
     {
       url: absoluteUrl("/en/location/"),
