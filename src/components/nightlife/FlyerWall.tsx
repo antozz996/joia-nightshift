@@ -43,7 +43,7 @@ const archiveTiles = [
 export function FlyerWall() {
   return (
     <div className={styles.flyerWall} aria-label="Archivio visuale JOIA / FORMĀ">
-      {archiveTiles.map((item, index) => (
+      {archiveTiles.map((item) => (
         <article
           className={styles.flyer}
           data-media-slot={item.media}
