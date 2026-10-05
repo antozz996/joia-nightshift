@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 export default function EnglishNightlifePage() {
   return (
     <main className={styles.page + " " + styles.night}>
-      <p className={styles.eyebrow}>FORMĀ / LISTENING HOUSE / NAPLES</p>
+      <p className={styles.eyebrow}>FORMĀ / MUSIC · SHOWS / NAPLES</p>
       <h1 className={styles.title}>The night takes shape.</h1>
       <p className={styles.copy}>
         Music, artists, community and production. The live Italian nightlife page carries
