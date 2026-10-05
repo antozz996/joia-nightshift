@@ -6,6 +6,50 @@ export function NightMotionController() {
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
+    const touchFirst =
+      window.matchMedia("(pointer: coarse)").matches ||
+      window.matchMedia("(max-width: 900px)").matches ||
+      navigator.maxTouchPoints > 0;
+
+    if (touchFirst) {
+      const elements = Array.from(
+        document.querySelectorAll<HTMLElement>("[data-night-reveal]"),
+      );
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+
+            const element = entry.target as HTMLElement;
+            observer.unobserve(element);
+
+            element.animate(
+              [
+                { opacity: 0, transform: "translate3d(0, 16px, 0)" },
+                { opacity: 1, transform: "translate3d(0, 0, 0)" },
+              ],
+              {
+                duration: 360,
+                easing: "cubic-bezier(.22,.74,.2,1)",
+                fill: "both",
+              },
+            );
+          });
+        },
+        { rootMargin: "0px 0px -7% 0px", threshold: 0.06 },
+      );
+
+      elements.forEach((element) => observer.observe(element));
+
+      return () => {
+        observer.disconnect();
+        elements.forEach((element) =>
+          element.getAnimations().forEach((animation) => animation.cancel()),
+        );
+      };
+    }
+
     let disposed = false;
     let cleanup: (() => void) | undefined;
 
