@@ -1,6 +1,8 @@
 export const siteConfig = {
   name: "JOIA",
+  descriptor: "JOIA Building",
   concept: "NIGHTSHIFT",
+  founded: 2004,
   locale: "it-IT",
   locales: ["it", "en"] as const,
   city: "Napoli",
@@ -15,6 +17,7 @@ export const siteConfig = {
     privateEvents: "/private-events/",
     nightlife: "/nightlife/",
     location: "/location/",
+    history: "/storia/",
   },
   featureFlags: {
     webglSwitch: true,

@@ -1665,3 +1665,100 @@
     font-size: .78rem;
   }
 }
+
+
+/* Official JOIA identity + capability pillars */
+.brandLogoPrivate {
+  width: 4.6rem;
+  height: auto;
+  display: block;
+}
+
+.capabilityGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: .8rem;
+}
+
+.capabilityCard {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(69,45,29,.1);
+  border-radius: 1.6rem;
+  background: rgba(255,255,255,.28);
+  box-shadow: 0 1.5rem 3.2rem rgba(75,51,32,.06);
+}
+
+.capabilityMedia {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+
+.capabilityImage {
+  object-fit: cover;
+  object-position: center;
+  filter: saturate(.8) contrast(1.03) brightness(.9);
+  transition: transform 800ms var(--ease-private), filter 500ms ease;
+}
+
+.capabilityCard:hover .capabilityImage {
+  transform: scale(1.035);
+  filter: saturate(.92) contrast(1.04) brightness(.94);
+}
+
+.capabilityShade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 48%, rgba(24,18,14,.46));
+  pointer-events: none;
+}
+
+.capabilityMeta {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.1rem .35rem;
+  font-family: var(--font-private-sans), sans-serif;
+  font-size: .64rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: #76685a;
+}
+
+.capabilityCopy {
+  padding: .35rem 1.1rem 1.25rem;
+}
+
+.capabilityCopy h3 {
+  margin: 0;
+  max-width: 12ch;
+  font-family: var(--font-private-display), Georgia, serif;
+  font-size: clamp(2.2rem,3vw,4rem);
+  font-weight: 500;
+  line-height: .94;
+  letter-spacing: -.04em;
+}
+
+.capabilityCopy p {
+  margin: .8rem 0 0;
+  color: #6d6154;
+  font-family: var(--font-private-sans), sans-serif;
+  font-size: .82rem;
+  line-height: 1.58;
+}
+
+@media (max-width: 700px) {
+  .brandLogoPrivate {
+    width: 4rem;
+  }
+
+  .capabilityGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .capabilityMedia {
+    aspect-ratio: 4 / 3;
+  }
+}

@@ -3,9 +3,9 @@ import { SwitchExperience } from "@/components/switch/SwitchExperience";
 import { localizedAlternates } from "@/lib/seo/site-url";
 
 export const metadata: Metadata = {
-  title: "JOIA — Private Events & FORMĀ Nightlife a Napoli",
+  title: "JOIA Building — Private Events & FORMĀ a Napoli",
   description:
-    "Entra in JOIA: Private Events di giorno e FORMĀ / Nightlife di notte. Un unico spazio a Napoli che cambia con la luce.",
+    "JOIA Building, dal 2004: Private Events e FORMĀ / Nightlife nello stesso spazio a Napoli. Design, scenografia, food, lighting e sound.",
   alternates: localizedAlternates("/", "/en/"),
 };
 

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { BrandLogo } from "@/components/brand/BrandLogo";
 import Link from "next/link";
 import { getNextNightEvent } from "@/lib/cms/nightlife";
 import styles from "./NightWorld.module.css";
@@ -21,20 +22,22 @@ export async function NightHero() {
     <section className={styles.hero} id="next">
       <div className={styles.heroMain}>
         <div className={styles.heroCopy} data-night-reveal>
-          <p className={styles.eyebrow}>FORMĀ / Listening House / Napoli</p>
+          <BrandLogo brand="forma" className={styles.heroFormaLogo} priority alt="FORMĀ" />
+          <p className={styles.eyebrow}>Music · Shows · Club Culture / Napoli</p>
           <h1 className={styles.heroTitle}>
             La notte <span>prende forma.</span>
           </h1>
           <p className={styles.heroIntro}>
-            Musica, artisti, community e produzione. FORMĀ è il linguaggio notturno di JOIA:
-            più denso, più veloce, più vicino al dancefloor.
+            FORMĀ è il linguaggio notturno di JOIA Building: musica, performance,
+            community, scenografia, lighting e sound in uno spazio che cambia ritmo con
+            ogni programmazione.
           </p>
         </div>
 
         <article className={styles.nextCard} aria-label="Prossima serata">
           <Image
             className={styles.nextMedia}
-            src="/media/nightlife/forma-hero.jpg"
+            src="/media/official/location/forma-location-2.jpg"
             alt=""
             fill
             priority
@@ -95,20 +98,20 @@ export async function NightHero() {
 
       <div className={styles.heroFooter} aria-label="JOIA in numeri e formati">
         <div className={styles.heroStat}>
-          <strong>20+</strong>
-          <span>anni di club culture</span>
+          <strong>2004</strong>
+          <span>anno di fondazione</span>
         </div>
         <div className={styles.heroStat}>
           <strong>03</strong>
-          <span>format storici</span>
+          <span>format heritage</span>
         </div>
         <div className={styles.heroStat}>
           <strong>01</strong>
-          <span>accent color</span>
+          <span>building / più assetti</span>
         </div>
         <div className={styles.heroStat}>
           <strong>∞</strong>
-          <span>archive / community</span>
+          <span>music / shows / community</span>
         </div>
       </div>
     </section>

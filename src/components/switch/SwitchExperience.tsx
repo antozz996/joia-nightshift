@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { BrandLogo } from "@/components/brand/BrandLogo";
 import { useRouter } from "next/navigation";
 import type { MouseEvent as ReactMouseEvent } from "react";
 import { useEffect, useState } from "react";
@@ -86,8 +87,10 @@ export function SwitchExperience() {
     >
       <header className={styles.header}>
         <div className={styles.headerBrand}>
-          <span className={styles.statusDot} aria-hidden="true" />
-          <span>JOIA</span>
+          <span className={styles.headerLogoWrap}>
+            <BrandLogo brand="joia" className={styles.headerLogo} priority alt="JOIA" />
+          </span>
+          <span className={styles.headerBuilding}>Building</span>
         </div>
         <p className={styles.headerMeta}>Napoli · Since 2004</p>
         <time className={styles.clock}>Napoli — {clock}</time>
@@ -97,7 +100,9 @@ export function SwitchExperience() {
         <p className={styles.kicker}>Un luogo. Due trasformazioni.</p>
         <h1 className={styles.title} id="threshold-title">
           Entra in
-          <span>JOIA.</span>
+          <span className={styles.titleLogoWrap}>
+            <BrandLogo brand="joia" className={styles.titleLogo} priority alt="JOIA" />
+          </span>
         </h1>
         <p className={styles.lead}>
           Scegli la forma che vuoi vivere. Lo spazio resta lo stesso,
@@ -153,6 +158,7 @@ export function SwitchExperience() {
         >
           <span className={styles.portalIndex}>02</span>
           <span className={styles.portalWorld}>FORMĀ / Nightlife</span>
+          <BrandLogo brand="forma" className={styles.portalFormaLogo} alt="FORMĀ" />
           <span className={styles.portalCopy}>
             <strong>Entra nella notte.</strong>
             <span>
@@ -182,7 +188,13 @@ export function SwitchExperience() {
         }
         aria-hidden="true"
       >
-        <div className={styles.transitionMark}>JOIA</div>
+        <div className={styles.transitionMark}>
+          {entering === "night" ? (
+            <BrandLogo brand="forma" className={styles.transitionFormaLogo} alt="" />
+          ) : (
+            <BrandLogo brand="joia" className={styles.transitionJoiaLogo} alt="" />
+          )}
+        </div>
         <div className={styles.transitionLabel}>
           {entering === "private"
             ? "PRIVATE EVENTS"

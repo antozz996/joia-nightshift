@@ -190,7 +190,7 @@
 }
 
 .portalNight::before {
-  background-image: url("/media/nightlife/forma-hero.jpg");
+  background-image: url("/media/official/location/forma-location-2.jpg");
   background-position: center;
   filter: saturate(.74) contrast(1.15) brightness(.62);
 }
@@ -412,7 +412,7 @@
 
 .transitionNight {
   color: #f4f7ef;
-  background-image: url("/media/nightlife/forma-hero.jpg");
+  background-image: url("/media/official/location/forma-location-2.jpg");
 }
 
 .transitionNight::before {
@@ -615,5 +615,96 @@
     animation: none;
     opacity: 1;
     transform: none;
+  }
+}
+
+
+/* Official JOIA / FORMĀ identity */
+.headerBrand {
+  gap: .45rem;
+}
+
+.headerLogoWrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: .28rem .42rem;
+  border-radius: 999px;
+  background: rgba(255,255,255,.92);
+  box-shadow: 0 .35rem 1.2rem rgba(0,0,0,.12);
+}
+
+.headerLogo {
+  width: 4.15rem;
+  height: auto;
+  display: block;
+}
+
+.headerBuilding {
+  font-size: .58rem;
+  letter-spacing: .16em;
+  opacity: .72;
+}
+
+.titleLogoWrap {
+  display: block;
+  margin-top: .08em;
+  line-height: 0;
+}
+
+.titleLogo {
+  width: min(42vw, 22rem);
+  height: auto;
+  filter: invert(1);
+  opacity: .96;
+}
+
+.portalFormaLogo {
+  position: relative;
+  z-index: 2;
+  align-self: end;
+  width: clamp(8rem, 16vw, 14rem);
+  height: auto;
+  margin-bottom: clamp(.8rem, 1.8vh, 1.25rem);
+  filter: invert(1);
+  opacity: .92;
+}
+
+.transitionMark {
+  display: grid;
+  place-items: center;
+  width: min(74vw, 42rem);
+}
+
+.transitionJoiaLogo,
+.transitionFormaLogo {
+  width: 100%;
+  height: auto;
+}
+
+.transitionNight .transitionFormaLogo {
+  filter: invert(1);
+}
+
+.transitionPrivate .transitionJoiaLogo {
+  opacity: .24;
+}
+
+@media (max-width: 767px), (pointer: coarse) {
+  .headerLogo {
+    width: 3.65rem;
+  }
+
+  .headerBuilding {
+    display: none;
+  }
+
+  .portalFormaLogo {
+    width: 7.4rem;
+    margin-bottom: .4rem;
+  }
+
+  .transitionMark {
+    width: min(78vw, 24rem);
   }
 }
