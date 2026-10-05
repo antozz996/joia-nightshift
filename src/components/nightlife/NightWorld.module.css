@@ -1004,3 +1004,218 @@
 .flyer > strong {
   z-index: 2;
 }
+
+
+/* Official FORMĀ identity + room / dinner material */
+.heroFormaLogo {
+  width: clamp(9rem, 16vw, 15rem);
+  height: auto;
+  filter: invert(1);
+  opacity: .94;
+  margin-bottom: .4rem;
+}
+
+.brandLogoNight {
+  width: 6.2rem;
+  height: auto;
+  filter: invert(1);
+  display: block;
+}
+
+.roomGrid {
+  display: grid;
+  grid-template-columns: 1.2fr .8fr .8fr;
+  grid-auto-rows: minmax(14rem, 22vw);
+  gap: .7rem;
+}
+
+.roomCard {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid rgba(233,236,225,.14);
+  background: #11130f;
+}
+
+.roomCard:first-child {
+  grid-row: span 2;
+}
+
+.roomCard:nth-child(4) {
+  grid-column: 2 / span 2;
+}
+
+.roomImage {
+  object-fit: cover;
+  object-position: center;
+  filter: saturate(.78) contrast(1.12) brightness(.72);
+  transition: transform 700ms var(--ease-night), filter 400ms ease;
+}
+
+.roomCard:hover .roomImage {
+  transform: scale(1.035);
+  filter: saturate(.9) contrast(1.13) brightness(.78);
+}
+
+.roomShade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, transparent 50%, rgba(5,6,5,.72)),
+    linear-gradient(120deg, rgba(215,255,0,.04), transparent 38%);
+  pointer-events: none;
+}
+
+.roomCaption {
+  position: absolute;
+  z-index: 2;
+  left: .8rem;
+  right: .8rem;
+  bottom: .75rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-family: var(--font-night-mono), monospace;
+  font-size: .62rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: rgba(244,247,239,.8);
+}
+
+.dinnerShell {
+  display: grid;
+  grid-template-columns: minmax(0,.38fr) minmax(0,.62fr);
+  gap: clamp(1.5rem,4vw,4rem);
+  align-items: stretch;
+}
+
+.dinnerCopy {
+  border: 1px solid rgba(233,236,225,.14);
+  padding: clamp(1.2rem,3vw,2rem);
+  display: grid;
+  align-content: end;
+  gap: 1rem;
+  background:
+    radial-gradient(circle at 15% 12%, rgba(215,255,0,.08), transparent 22rem),
+    #0e100d;
+}
+
+.dinnerCopy h3 {
+  margin: 0;
+  max-width: 8ch;
+  font-family: var(--font-night-display), "Arial Narrow", sans-serif;
+  font-size: clamp(3.8rem,6vw,7rem);
+  line-height: .78;
+  letter-spacing: -.055em;
+  text-transform: uppercase;
+}
+
+.dinnerCopy h3 i {
+  color: var(--night-acid);
+  font-style: normal;
+}
+
+.dinnerCopy > p:not(.eyebrow) {
+  margin: 0;
+  color: var(--night-muted);
+  font-family: var(--font-night-mono), monospace;
+  font-size: .78rem;
+  line-height: 1.7;
+}
+
+.dinnerMedia {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: .55rem;
+}
+
+.dinnerImageWrap {
+  position: relative;
+  min-height: 31rem;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid rgba(233,236,225,.12);
+}
+
+.dinnerImageWrap:nth-child(2) {
+  transform: translateY(2.2rem);
+}
+
+.dinnerImage {
+  object-fit: cover;
+  object-position: center;
+  filter: saturate(.76) contrast(1.08) brightness(.82);
+}
+
+.dinnerImageWrap > span {
+  position: absolute;
+  z-index: 2;
+  top: .65rem;
+  right: .65rem;
+  width: 2rem;
+  height: 2rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(5,6,5,.72);
+  border: 1px solid rgba(233,236,225,.2);
+  font-family: var(--font-night-mono), monospace;
+  font-size: .58rem;
+  color: #fff;
+}
+
+@media (max-width: 900px) {
+  .roomGrid {
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: 18rem;
+  }
+
+  .roomCard:first-child {
+    grid-column: span 2;
+    grid-row: auto;
+  }
+
+  .roomCard:nth-child(4) {
+    grid-column: span 2;
+  }
+
+  .dinnerShell {
+    grid-template-columns: 1fr;
+  }
+
+  .dinnerImageWrap {
+    min-height: 24rem;
+  }
+}
+
+@media (max-width: 700px) {
+  .heroFormaLogo {
+    width: 8.8rem;
+  }
+
+  .brandLogoNight {
+    width: 5.2rem;
+  }
+
+  .roomGrid {
+    grid-template-columns: 1fr;
+    grid-auto-rows: 18rem;
+  }
+
+  .roomCard:first-child,
+  .roomCard:nth-child(4) {
+    grid-column: auto;
+  }
+
+  .dinnerMedia {
+    grid-template-columns: 1fr;
+  }
+
+  .dinnerImageWrap {
+    min-height: 20rem;
+  }
+
+  .dinnerImageWrap:nth-child(2) {
+    transform: none;
+  }
+}
