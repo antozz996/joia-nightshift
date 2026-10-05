@@ -304,8 +304,7 @@ export function PrivateBriefForm({ initialEventType = "" }: { initialEventType?:
               onChange={(event) => update("privacy", event.target.checked)}
             />
             <span>
-              Acconsento a essere ricontattato in relazione a questa richiesta. L’informativa
-              privacy definitiva verrà collegata prima della pubblicazione.
+              Acconsento a essere ricontattato dal team JOIA in relazione a questa richiesta.
             </span>
           </label>
 

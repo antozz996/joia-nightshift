@@ -10,10 +10,10 @@ export function NightNav() {
       </Link>
 
       <div className={styles.navLinks}>
-        <Link href="/nightlife/#next">Next</Link>
-        <Link href="/nightlife/#formats">Formats</Link>
-        <Link href="/nightlife/#archive">Archive</Link>
-        <Link href="/nightlife/#artists">Artists</Link>
+        <Link href="/nightlife/#next">Prossimo</Link>
+        <Link href="/nightlife/#dinner">Dinner</Link>
+        <Link href="/nightlife/#archive">Archivio</Link>
+        <Link href="/nightlife/#artists">Artisti</Link>
         <Link className={styles.navCta} href="/nightlife/#community">
           Join
         </Link>

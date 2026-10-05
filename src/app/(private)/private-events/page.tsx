@@ -62,9 +62,8 @@ export default function PrivateEventsPage() {
               Cena. Cocktail.<br />Party.
             </h2>
             <p className={styles.sectionText}>
-              Tre modi diversi di occupare la sala. Il configuratore racconta la logica del
-              layout; le capienze ufficiali verranno pubblicate solo dopo validazione della
-              proprietà.
+              Tre modi diversi di occupare la sala. Il team definisce configurazione e
+              numero di ospiti insieme a te, in base al progetto reale dell’evento.
             </p>
           </div>
         </div>

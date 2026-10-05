@@ -48,10 +48,10 @@ export async function NightHero() {
 
           <div className={styles.nextCenter}>
             <p className={styles.nextLabel}>
-              {next ? "Prossimo evento" : "Programmazione in aggiornamento"}
+              {next ? "Prossimo evento" : "Prossime date"}
             </p>
             <h2 className={styles.nextTitle}>
-              {next ? next.title : "La prossima frequenza arriva qui."}
+              {next ? next.title : "La prossima notte prende forma qui."}
             </h2>
             <p className={styles.nextMeta}>
               {next
@@ -63,7 +63,7 @@ export async function NightHero() {
                   ]
                     .filter(Boolean)
                     .join(" — ")
-                : "Nessuna data viene inventata: appena il team pubblica il prossimo evento nel CMS, questa card si aggiorna con ticket, tavoli e line-up."}
+                : "Date, line-up e accessi vengono pubblicati appena confermati. Entra nella community per ricevere gli aggiornamenti FORMĀ."}
             </p>
           </div>
 
@@ -88,7 +88,7 @@ export async function NightHero() {
                 </Link>
               )}
             </div>
-            <span>{next ? formatEventDate(next.startsAt) : "CMS driven"}</span>
+            <span>{next ? formatEventDate(next.startsAt) : "JOIA Building / FORMĀ"}</span>
           </div>
         </article>
       </div>

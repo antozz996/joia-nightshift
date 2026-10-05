@@ -46,8 +46,8 @@ export default function NightlifePage() {
             </h2>
             <p className={styles.sectionText}>
               FORMĀ non è solo ingresso in club: dinner, champagneria, tavoli e dancefloor
-              possono vivere nello stesso percorso. Il materiale food ufficiale JOIA conferma
-              questa parte dell’esperienza e diventerà gestibile dal CMS per ogni serata.
+              possono vivere nello stesso percorso. La serata può iniziare a tavola e cambiare
+              ritmo senza mai cambiare luogo.
             </p>
           </div>
         </div>
@@ -79,9 +79,8 @@ export default function NightlifePage() {
               Vent’anni non sono <i>background.</i>
             </h2>
             <p className={styles.sectionText}>
-              Sono materiale. La parete ora mescola fotografie FORMĀ reali con slot riservati
-              ai flyer storici che devono ancora essere raccolti: nessuna immagine stock e
-              nessun falso archivio.
+              Sono materia viva: sala, folla, performance, dettagli e identità. Un archivio
+              visivo costruito esclusivamente con immagini reali JOIA e FORMĀ.
             </p>
           </div>
         </div>
@@ -96,9 +95,8 @@ export default function NightlifePage() {
               Nomi che hanno <i>lasciato frequenza.</i>
             </h2>
             <p className={styles.sectionText}>
-              Se Sanity contiene artisti in evidenza, questa sezione si aggiorna
-              automaticamente. Fino ad allora usa una selezione dell’archivio storico
-              dichiarato da JOIA.
+              Una selezione di artisti e presenze che hanno attraversato la storia di JOIA,
+              collegando l’heritage del club alla nuova identità FORMĀ.
             </p>
           </div>
         </div>
@@ -113,9 +111,8 @@ export default function NightlifePage() {
             <p className={styles.eyebrow}>05 / Community channel</p>
             <h2>Prima che diventi pubblico.</h2>
             <p>
-              Community, tavoli e guest list condividono un solo punto d’ingresso. Il form
-              invia al team JOIA e, se il provider email non è ancora configurato, genera
-              subito il fallback WhatsApp o email.
+              Community, tavoli e guest list condividono un solo punto d’ingresso. Scegli
+              come vuoi vivere la prossima notte e lascia al team JOIA i dati per ricontattarti.
             </p>
           </div>
           <NightlifeLeadForm />

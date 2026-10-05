@@ -21,11 +21,11 @@ export const metadata: Metadata = {
 export default function EnglishNightlifePage() {
   return (
     <main className={styles.page + " " + styles.night}>
-      <p className={styles.eyebrow}>FORMĀ / LISTENING HOUSE / NAPLES</p>
+      <p className={styles.eyebrow}>FORMĀ / MUSIC · SHOWS / NAPLES</p>
       <h1 className={styles.title}>The night takes shape.</h1>
       <p className={styles.copy}>
-        Music, artists, community and production. The live Italian nightlife page carries
-        the next event, tickets, tables, guest list and the JOIA archive.
+        Music, shows, dinner and community. FORMĀ is the contemporary nightlife language
+        of JOIA Building, connecting the venue’s heritage with its next chapter.
       </p>
       <div className={styles.links}>
         <Link href="/nightlife/">Open live nightlife page</Link>
@@ -35,7 +35,7 @@ export default function EnglishNightlifePage() {
       <div className={styles.details}>
         <div className={styles.detail}>
           <strong>Next</strong>
-          <span>CMS-driven event publishing</span>
+          <span>Confirmed dates, line-up and access</span>
         </div>
         <div className={styles.detail}>
           <strong>Access</strong>

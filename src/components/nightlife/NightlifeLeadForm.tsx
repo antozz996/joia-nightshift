@@ -251,8 +251,7 @@ export function NightlifeLeadForm({
           onChange={(changeEvent) => setPrivacy(changeEvent.target.checked)}
         />
         <span>
-          Acconsento a essere ricontattato per questa richiesta. L’informativa privacy
-          definitiva verrà collegata prima del go-live.
+          Acconsento a essere ricontattato dal team JOIA in relazione a questa richiesta.
         </span>
       </label>
 
