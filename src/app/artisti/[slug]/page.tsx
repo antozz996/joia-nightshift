@@ -115,14 +115,14 @@ export default async function ArtistPage({ params }: PageProps) {
               </h2>
               <p className={styles.sectionText}>
                 {cmsArtist?.bio ??
-                  "Questa pagina non inventa una biografia. Conserva il nome nell’archivio JOIA e si arricchisce automaticamente quando Sanity contiene bio, generi, paese ed eventi collegati."}
+                  "Un nome dell’archivio JOIA: profilo, generi ed eventi collegati vengono presentati quando disponibili."}
               </p>
             </div>
           </div>
 
           {events.length ? (
             <div className={styles.artistRail}>
-              {events.map((event, index) => (
+              {events.map((event) => (
                 <Link
                   className={styles.artistLink}
                   href={"/eventi/" + event.slug + "/"}
