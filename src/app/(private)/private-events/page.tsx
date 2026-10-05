@@ -4,6 +4,7 @@ import { PrivateBriefForm } from "@/components/private/PrivateBriefForm";
 import { PrivateConfigurator } from "@/components/private/PrivateConfigurator";
 import { PrivateGallery } from "@/components/private/PrivateGallery";
 import { PrivateHero } from "@/components/private/PrivateHero";
+import { PrivatePillars } from "@/components/private/PrivatePillars";
 import { PrivateTypeCards } from "@/components/private/PrivateTypeCards";
 import { FaqSection } from "@/components/seo/FaqSection";
 import { privateFaqs } from "@/content/faqs";
@@ -25,9 +26,23 @@ export default function PrivateEventsPage() {
         intro="JOIA non è un nightclub da prendere in affitto. È uno spazio con una storia, una regia e una capacità precisa: cambiare atmosfera, ritmo e disposizione intorno alle persone."
       />
 
+      <section className={styles.section + " " + styles.sectionCapabilities} id="capabilities">
+        <div className={styles.sectionHeader} data-private-reveal>
+          <p className={styles.eyebrow}>01 / Cosa stai comprando</p>
+          <div>
+            <h2 className={styles.sectionTitle}>Non solo una sala. Un sistema di produzione.</h2>
+            <p className={styles.sectionText}>
+              Il valore di JOIA Building sta nella capacità di tenere insieme spazio, food,
+              tecnologia e gestione. Quattro leve che cambiano in base all’evento.
+            </p>
+          </div>
+        </div>
+        <PrivatePillars />
+      </section>
+
       <section className={styles.section + " " + styles.sectionSoft} id="formati">
         <div className={styles.sectionHeader} data-private-reveal>
-          <p className={styles.eyebrow}>01 / Scegli il motivo</p>
+          <p className={styles.eyebrow}>02 / Scegli il motivo</p>
           <div>
             <h2 className={styles.sectionTitle}>La stessa sala. Quattro storie diverse.</h2>
             <p className={styles.sectionText}>
@@ -41,7 +56,7 @@ export default function PrivateEventsPage() {
 
       <section className={styles.section + " " + styles.sectionWarm} id="layout">
         <div className={styles.sectionHeader} data-private-reveal>
-          <p className={styles.eyebrow}>02 / Configura lo spazio</p>
+          <p className={styles.eyebrow}>03 / Configura lo spazio</p>
           <div>
             <h2 className={styles.sectionTitle}>
               Cena. Cocktail.<br />Party.
@@ -58,7 +73,7 @@ export default function PrivateEventsPage() {
 
       <section className={styles.section + " " + styles.sectionBronze} id="trasformazione">
         <div className={styles.sectionHeader} data-private-reveal>
-          <p className={styles.eyebrow}>03 / Trasformazione</p>
+          <p className={styles.eyebrow}>04 / Trasformazione</p>
           <div>
             <h2 className={styles.sectionTitle}>Non decorare lo spazio. Cambiarne il ritmo.</h2>
             <p className={styles.sectionText}>
@@ -72,7 +87,7 @@ export default function PrivateEventsPage() {
 
       <section className={styles.section + " " + styles.sectionGallery} id="gallery">
         <div className={styles.sectionHeader} data-private-reveal>
-          <p className={styles.eyebrow}>04 / Atmosfera</p>
+          <p className={styles.eyebrow}>05 / Atmosfera</p>
           <div>
             <h2 className={styles.sectionTitle}>Materiale vero, trattato come un editoriale.</h2>
             <p className={styles.sectionText}>
@@ -90,7 +105,7 @@ export default function PrivateEventsPage() {
       <section className={styles.section + " " + styles.sectionBrief} id="brief">
         <div className={styles.briefShell}>
           <div className={styles.briefIntro} data-private-reveal>
-            <p className={styles.eyebrow}>05 / Il tuo evento</p>
+            <p className={styles.eyebrow}>06 / Il tuo evento</p>
             <h2>Raccontacelo in cinque passi.</h2>
             <p>
               Bastano tipo di evento, persone, data, budget e un contatto. Il team riceve un

@@ -21,13 +21,13 @@ export async function NightHero() {
     <section className={styles.hero} id="next">
       <div className={styles.heroMain}>
         <div className={styles.heroCopy} data-night-reveal>
-          <p className={styles.eyebrow}>FORMĀ / Listening House / Napoli</p>
+          <p className={styles.eyebrow}>FORMĀ / Music · Shows · Club Culture / Napoli</p>
           <h1 className={styles.heroTitle}>
             La notte <span>prende forma.</span>
           </h1>
           <p className={styles.heroIntro}>
-            Musica, artisti, community e produzione. FORMĀ è il linguaggio notturno di JOIA:
-            più denso, più veloce, più vicino al dancefloor.
+            Musica, show, dinner e community. FORMĀ è il linguaggio notturno contemporaneo
+            di JOIA Building: il club cambia forma senza perdere il suo heritage.
           </p>
         </div>
 
@@ -104,11 +104,11 @@ export async function NightHero() {
         </div>
         <div className={styles.heroStat}>
           <strong>01</strong>
-          <span>accent color</span>
+          <span>building / one room</span>
         </div>
         <div className={styles.heroStat}>
           <strong>∞</strong>
-          <span>archive / community</span>
+          <span>music / shows / dinner</span>
         </div>
       </div>
     </section>

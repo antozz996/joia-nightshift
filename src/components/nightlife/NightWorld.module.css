@@ -1004,3 +1004,125 @@
 .flyer > strong {
   z-index: 2;
 }
+
+
+/* Dinner at FORMĀ — aligned with official JOIA food proposition */
+.dinnerShell {
+  display: grid;
+  grid-template-columns: minmax(0,.52fr) minmax(0,.48fr);
+  gap: clamp(1rem, 3vw, 2.4rem);
+  align-items: stretch;
+}
+
+.dinnerVisual {
+  position: relative;
+  min-height: 34rem;
+  overflow: hidden;
+  border: 1px solid rgba(233,236,225,.14);
+  background: #0b0c09;
+}
+
+.dinnerImage {
+  object-fit: cover;
+  object-position: center;
+  filter: saturate(.72) contrast(1.12) brightness(.72);
+}
+
+.dinnerShade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(7,8,6,.08), rgba(7,8,6,.72)),
+    radial-gradient(circle at 68% 18%, rgba(215,255,0,.08), transparent 24rem);
+}
+
+.dinnerVisualCopy {
+  position: absolute;
+  z-index: 2;
+  left: clamp(1rem, 2.5vw, 1.6rem);
+  right: clamp(1rem, 2.5vw, 1.6rem);
+  bottom: clamp(1rem, 2.5vw, 1.6rem);
+  display: grid;
+  gap: .6rem;
+}
+
+.dinnerVisualCopy span,
+.dinnerOffer > span {
+  font-family: var(--font-night-mono), monospace;
+  font-size: .62rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--night-muted);
+}
+
+.dinnerVisualCopy strong {
+  max-width: 9ch;
+  font-family: var(--font-night-display), "Arial Narrow", sans-serif;
+  font-size: clamp(3.2rem, 6vw, 7rem);
+  line-height: .78;
+  letter-spacing: -.055em;
+  text-transform: uppercase;
+}
+
+.dinnerOffers {
+  border-top: 1px solid rgba(233,236,225,.16);
+  display: grid;
+  align-content: start;
+}
+
+.dinnerOffer {
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0,.38fr) minmax(0,.62fr);
+  gap: 1rem;
+  align-items: start;
+  padding: 1.1rem 0;
+  border-bottom: 1px solid rgba(233,236,225,.16);
+}
+
+.dinnerOffer h3 {
+  margin: 0;
+  font-family: var(--font-night-display), "Arial Narrow", sans-serif;
+  font-size: clamp(2rem, 3.5vw, 4rem);
+  line-height: .84;
+  letter-spacing: -.045em;
+  text-transform: uppercase;
+}
+
+.dinnerOffer p {
+  margin: 0;
+  color: var(--night-muted);
+  font-family: var(--font-night-mono), monospace;
+  font-size: .75rem;
+  line-height: 1.6;
+}
+
+.dinnerActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .55rem;
+  padding-top: 1.2rem;
+}
+
+@media (max-width: 900px) {
+  .dinnerShell {
+    grid-template-columns: 1fr;
+  }
+
+  .dinnerVisual {
+    min-height: 28rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .dinnerOffer {
+    grid-template-columns: 2rem 1fr;
+  }
+
+  .dinnerOffer p {
+    grid-column: 2;
+  }
+
+  .dinnerVisual {
+    min-height: 24rem;
+  }
+}
