@@ -1665,3 +1665,73 @@
     font-size: .78rem;
   }
 }
+
+
+/* JOIA Building capabilities */
+.sectionCapabilities {
+  background:
+    radial-gradient(circle at 82% 10%, rgba(147,98,62,.12), transparent 22rem),
+    linear-gradient(145deg, rgba(232,217,196,.84), rgba(244,236,225,.72));
+  border-radius: clamp(1.5rem, 3vw, 2.8rem);
+  border: 1px solid rgba(69,45,29,.1);
+}
+
+.pillarGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0,1fr));
+  border-top: 1px solid rgba(69,45,29,.14);
+  border-left: 1px solid rgba(69,45,29,.14);
+}
+
+.pillarCard {
+  min-height: 18rem;
+  padding: 1.2rem;
+  border-right: 1px solid rgba(69,45,29,.14);
+  border-bottom: 1px solid rgba(69,45,29,.14);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 1rem;
+  background: rgba(255,255,255,.16);
+}
+
+.pillarIndex {
+  font-family: var(--font-private-sans), sans-serif;
+  font-size: .64rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: #837365;
+}
+
+.pillarCard h3 {
+  align-self: center;
+  margin: 0;
+  font-family: var(--font-private-display), Georgia, serif;
+  font-size: clamp(2.4rem, 4vw, 4.8rem);
+  font-weight: 500;
+  line-height: .9;
+  letter-spacing: -.04em;
+}
+
+.pillarCard p {
+  margin: 0;
+  color: #6d6154;
+  font-family: var(--font-private-sans), sans-serif;
+  font-size: .8rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 900px) {
+  .pillarGrid {
+    grid-template-columns: repeat(2, minmax(0,1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .pillarGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .pillarCard {
+    min-height: 13rem;
+  }
+}
