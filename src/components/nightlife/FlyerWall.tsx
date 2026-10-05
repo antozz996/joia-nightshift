@@ -33,10 +33,10 @@ const archiveTiles = [
     alt: "Ritratto guest durante una serata FORMĀ",
   },
   {
-    meta: "ARCHIVE SLOT",
-    title: "PAST / NEXT",
-    media: null,
-    alt: "",
+    meta: "COMMUNITY / BLUE",
+    title: "FREQUENCY",
+    media: "/media/nightlife/forma-crowd-blue.jpg",
+    alt: "Crowd FORMĀ sotto la sfera luminosa",
   },
 ] as const;
 
@@ -46,25 +46,21 @@ export function FlyerWall() {
       {archiveTiles.map((item, index) => (
         <article
           className={styles.flyer}
-          data-media-slot={item.media ?? "/public/media/archive/flyer-" + (index + 1) + ".webp"}
+          data-media-slot={item.media}
           key={item.meta + item.title}
           data-night-skew
         >
-          {item.media ? (
-            <>
-              <Image
-                className={styles.flyerImage}
-                src={item.media}
-                alt={item.alt}
-                fill
-                sizes="(max-width: 900px) 50vw, 28vw"
-              />
-              <span className={styles.flyerShade} aria-hidden="true" />
-            </>
-          ) : null}
+          <Image
+            className={styles.flyerImage}
+            src={item.media}
+            alt={item.alt}
+            fill
+            sizes="(max-width: 900px) 50vw, 28vw"
+          />
+          <span className={styles.flyerShade} aria-hidden="true" />
           <span>{item.meta}</span>
           <strong>{item.title}</strong>
-          <span>{item.media ? "JOIA / FORMĀ ↗" : "Materiale storico richiesto ↗"}</span>
+          <span>JOIA / FORMĀ ↗</span>
         </article>
       ))}
     </div>
