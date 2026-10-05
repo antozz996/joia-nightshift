@@ -191,3 +191,67 @@
     flex-direction: column;
   }
 }
+
+
+.photoArchive {
+  margin-top: clamp(3rem, 7vw, 7rem);
+  display: grid;
+  grid-template-columns: minmax(0, 1.65fr) minmax(0, .85fr);
+  gap: .7rem;
+  align-items: stretch;
+}
+
+.photoArchive figure {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid rgba(236,239,231,.14);
+  background: #0b0c09;
+}
+
+.photoArchive img {
+  object-fit: cover;
+  filter: saturate(.76) contrast(1.1) brightness(.75);
+}
+
+.photoLarge {
+  min-height: clamp(28rem, 52vw, 56rem);
+}
+
+.photoSmall {
+  min-height: clamp(22rem, 42vw, 46rem);
+  align-self: end;
+}
+
+.photoArchive figcaption {
+  position: absolute;
+  left: .8rem;
+  bottom: .8rem;
+  z-index: 2;
+  padding: .42rem .56rem;
+  background: rgba(7,8,6,.72);
+  color: #daddd3;
+  font-family: var(--font-night-mono), monospace;
+  font-size: .58rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.photoArchive figure::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 56%, rgba(7,8,6,.58));
+  pointer-events: none;
+}
+
+@media (max-width: 800px) {
+  .photoArchive {
+    grid-template-columns: 1fr;
+  }
+
+  .photoLarge,
+  .photoSmall {
+    min-height: 24rem;
+  }
+}
