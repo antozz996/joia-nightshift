@@ -34,7 +34,7 @@ export async function NightHero() {
         <article className={styles.nextCard} aria-label="Prossima serata">
           <Image
             className={styles.nextMedia}
-            src="/media/nightlife/forma-hero.jpg"
+            src="/media/nightlife/official/forma-room-red.jpg"
             alt=""
             fill
             priority
