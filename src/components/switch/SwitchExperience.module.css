@@ -617,3 +617,16 @@
     transform: none;
   }
 }
+
+
+.headerMeta a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.headerMeta a:hover,
+.headerMeta a:focus-visible {
+  opacity: 1;
+  text-decoration: underline;
+  text-underline-offset: .25em;
+}
