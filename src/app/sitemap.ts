@@ -64,6 +64,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       },
     },
     {
+      url: absoluteUrl("/storia/"),
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.75,
+    },
+    {
       url: absoluteUrl("/en/"),
       lastModified: now,
       changeFrequency: "weekly",
