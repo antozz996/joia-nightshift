@@ -1,5 +1,5 @@
 export const siteConfig = {
-  name: "JOIA",
+  name: "JOIA Building",
   concept: "NIGHTSHIFT",
   locale: "it-IT",
   locales: ["it", "en"] as const,
@@ -15,6 +15,7 @@ export const siteConfig = {
     privateEvents: "/private-events/",
     nightlife: "/nightlife/",
     location: "/location/",
+    history: "/storia/",
   },
   featureFlags: {
     webglSwitch: true,
