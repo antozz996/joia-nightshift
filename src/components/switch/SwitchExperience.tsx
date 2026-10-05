@@ -87,7 +87,8 @@ export function SwitchExperience() {
       <header className={styles.header}>
         <div className={styles.headerBrand}>
           <span className={styles.statusDot} aria-hidden="true" />
-          <span>JOIA BUILDING</span>
+          <span className={styles.headerLogo} aria-label="JOIA" />
+          <span className={styles.buildingLabel}>Building</span>
         </div>
         <p className={styles.headerMeta}><Link href="/storia/">Sant’Antimo · Napoli · Since 2004</Link></p>
         <time className={styles.clock}>Napoli — {clock}</time>
