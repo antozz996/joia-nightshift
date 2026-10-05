@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { FlyerWall } from "@/components/nightlife/FlyerWall";
 import { NightArtists } from "@/components/nightlife/NightArtists";
+import { NightDinner } from "@/components/nightlife/NightDinner";
 import { NightFormats } from "@/components/nightlife/NightFormats";
 import { NightHero } from "@/components/nightlife/NightHero";
 import { NightlifeLeadForm } from "@/components/nightlife/NightlifeLeadForm";
@@ -25,27 +26,45 @@ export default function NightlifePage() {
       <KineticMarquee
         items={[
           "FORMĀ",
-          "JOIA",
+          "JOIA BUILDING",
           "NAPOLI",
           "SINCE 2004",
-          "LISTENING HOUSE",
-          "ARTISTS",
+          "MUSIC",
+          "SHOWS",
+          "DINNER",
           "COMMUNITY",
         ]}
         label="FORMĀ / JOIA nightlife"
       />
 
+      <section className={styles.section} id="dinner">
+        <div className={styles.sectionHeader} data-night-reveal>
+          <p className={styles.eyebrow}>01 / Dinner & night</p>
+          <div>
+            <h2 className={styles.sectionTitle}>
+              La notte può <i>iniziare a tavola.</i>
+            </h2>
+            <p className={styles.sectionText}>
+              FORMĀ non è solo ingresso in club: dinner, champagneria, tavoli e dancefloor
+              possono vivere nello stesso percorso. Il materiale food ufficiale JOIA conferma
+              questa parte dell’esperienza e diventerà gestibile dal CMS per ogni serata.
+            </p>
+          </div>
+        </div>
+        <NightDinner />
+      </section>
+
       <section className={styles.section} id="formats">
         <div className={styles.sectionHeader} data-night-reveal>
-          <p className={styles.eyebrow}>01 / Frequency map</p>
+          <p className={styles.eyebrow}>02 / Heritage map</p>
           <div>
             <h2 className={styles.sectionTitle}>
               Tre notti. <i>Tre codici.</i>
             </h2>
             <p className={styles.sectionText}>
-              L’heritage pubblico di JOIA racconta tre format ricorrenti: Carillon il venerdì,
-              SIX il sabato e POV la domenica. Qui diventano archivio navigabile e base
-              editoriale per la nuova identità FORMĀ.
+              Carillon, SIX e POV appartengono all’heritage JOIA: tre codici che hanno
+              raccontato venerdì, sabato e domenica. Qui restano archivio e memoria del club,
+              senza confonderli con la programmazione contemporanea FORMĀ.
             </p>
           </div>
         </div>
@@ -54,7 +73,7 @@ export default function NightlifePage() {
 
       <section className={styles.section} id="archive">
         <div className={styles.sectionHeader} data-night-reveal>
-          <p className={styles.eyebrow}>02 / Visual archive</p>
+          <p className={styles.eyebrow}>03 / Visual archive</p>
           <div>
             <h2 className={styles.sectionTitle}>
               Vent’anni non sono <i>background.</i>
@@ -71,7 +90,7 @@ export default function NightlifePage() {
 
       <section className={styles.section} id="artists">
         <div className={styles.sectionHeader} data-night-reveal>
-          <p className={styles.eyebrow}>03 / Artist archive</p>
+          <p className={styles.eyebrow}>04 / Artist archive</p>
           <div>
             <h2 className={styles.sectionTitle}>
               Nomi che hanno <i>lasciato frequenza.</i>
@@ -91,7 +110,7 @@ export default function NightlifePage() {
       <section className={styles.section} id="community">
         <div className={styles.leadGrid}>
           <div className={styles.leadIntro} data-night-reveal>
-            <p className={styles.eyebrow}>04 / Community channel</p>
+            <p className={styles.eyebrow}>05 / Community channel</p>
             <h2>Prima che diventi pubblico.</h2>
             <p>
               Community, tavoli e guest list condividono un solo punto d’ingresso. Il form
