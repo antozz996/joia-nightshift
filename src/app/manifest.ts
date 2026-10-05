@@ -2,9 +2,9 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "JOIA — NIGHTSHIFT",
+    name: "JOIA Building",
     short_name: "JOIA",
-    description: "Private Events e FORMĀ / Nightlife a Napoli.",
+    description: "JOIA Building: Private Events e FORMĀ / Nightlife a Napoli, dal 2004.",
     start_url: "/",
     display: "standalone",
     background_color: "#070806",
