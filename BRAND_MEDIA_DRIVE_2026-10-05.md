@@ -142,3 +142,7 @@ Priorità di import:
 6. JOIA wordmark → Joia.png
 7. FORMĀ wordmark → export da Forma_Logo.pdf
 
+
+## Validation
+
+Final integration validation triggered after brand, SEO, Private and FORMĀ updates.
