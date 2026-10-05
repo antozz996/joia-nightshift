@@ -35,7 +35,7 @@ export default function EnglishNightlifePage() {
       <div className={styles.details}>
         <div className={styles.detail}>
           <strong>Next</strong>
-          <span>CMS-driven event publishing</span>
+          <span>Confirmed dates, line-up and access</span>
         </div>
         <div className={styles.detail}>
           <strong>Access</strong>
