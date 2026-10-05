@@ -134,8 +134,8 @@ export default async function EventPage({ params }: PageProps) {
               </>
             ) : (
               <p>
-                Questo è un format dell’archivio storico JOIA. Le singole date vengono
-                pubblicate come eventi separati nel CMS.
+                Questo è un format dell’archivio storico JOIA. Le prossime date collegate
+                vengono pubblicate quando confermate dal team.
               </p>
             )}
           </aside>
