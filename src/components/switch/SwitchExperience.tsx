@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type { MouseEvent as ReactMouseEvent } from "react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./SwitchExperience.module.css";
 
 type World = "private" | "night";
@@ -19,7 +19,6 @@ export function SwitchExperience() {
   const [preview, setPreview] = useState<World | null>(null);
   const [entering, setEntering] = useState<World | null>(null);
   const [introPhase, setIntroPhase] = useState<"boot" | "exit" | "done">("boot");
-  const navigationTimer = useRef<number | null>(null);
 
   useEffect(() => {
     router.prefetch(destinations.private);
@@ -41,7 +40,6 @@ export function SwitchExperience() {
 
     return () => {
       window.clearInterval(interval);
-      if (navigationTimer.current) window.clearTimeout(navigationTimer.current);
     };
   }, [router]);
 
@@ -50,8 +48,8 @@ export function SwitchExperience() {
 
     try {
       if (window.sessionStorage.getItem("joia-intro-seen") === "1") {
-        setIntroPhase("done");
-        return;
+        const seenTimer = window.setTimeout(() => setIntroPhase("done"), 0);
+        return () => window.clearTimeout(seenTimer);
       }
     } catch {
       // sessionStorage can be unavailable in strict privacy contexts.
@@ -91,7 +89,7 @@ export function SwitchExperience() {
     setPreview(world);
     setEntering(world);
 
-    navigationTimer.current = window.setTimeout(() => {
+    window.setTimeout(() => {
       router.push(href);
     }, 680);
   };
