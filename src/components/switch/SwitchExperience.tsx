@@ -18,6 +18,7 @@ export function SwitchExperience() {
   const [clock, setClock] = useState("--:--");
   const [preview, setPreview] = useState<World | null>(null);
   const [entering, setEntering] = useState<World | null>(null);
+  const [introPhase, setIntroPhase] = useState<"boot" | "exit" | "done">("boot");
 
   useEffect(() => {
     router.prefetch(destinations.private);
@@ -41,6 +42,40 @@ export function SwitchExperience() {
       window.clearInterval(interval);
     };
   }, [router]);
+
+  useEffect(() => {
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    try {
+      if (window.sessionStorage.getItem("joia-intro-seen") === "1") {
+        const seenTimer = window.setTimeout(() => setIntroPhase("done"), 0);
+        return () => window.clearTimeout(seenTimer);
+      }
+    } catch {
+      // sessionStorage can be unavailable in strict privacy contexts.
+    }
+
+    const exitDelay = reduced ? 260 : 1450;
+    const endDelay = reduced ? 460 : 2050;
+
+    const exitTimer = window.setTimeout(() => {
+      setIntroPhase("exit");
+    }, exitDelay);
+
+    const endTimer = window.setTimeout(() => {
+      setIntroPhase("done");
+      try {
+        window.sessionStorage.setItem("joia-intro-seen", "1");
+      } catch {
+        // The intro still works when sessionStorage is unavailable.
+      }
+    }, endDelay);
+
+    return () => {
+      window.clearTimeout(exitTimer);
+      window.clearTimeout(endTimer);
+    };
+  }, []);
 
   const enterWorld = (world: World) => {
     const href = destinations[world];
@@ -84,6 +119,24 @@ export function SwitchExperience() {
       data-entering={entering ?? "none"}
       aria-label="Scegli l'esperienza JOIA"
     >
+      {introPhase !== "done" ? (
+        <div
+          className={styles.preloader}
+          data-phase={introPhase}
+          aria-hidden="true"
+        >
+          <div className={styles.preloaderInner}>
+            <span className={styles.preloaderEyebrow}>Sant’Antimo · Napoli · Since 2004</span>
+            <span className={styles.preloaderLogo} />
+            <div className={styles.preloaderTrack}>
+              <span />
+            </div>
+            <span className={styles.preloaderWorlds}>Private Events · FORMĀ / Nightlife</span>
+          </div>
+          <span className={styles.preloaderYear}>20+ years / one building</span>
+        </div>
+      ) : null}
+
       <header className={styles.header}>
         <div className={styles.headerBrand}>
           <span className={styles.statusDot} aria-hidden="true" />
