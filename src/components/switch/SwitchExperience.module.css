@@ -660,3 +660,212 @@
     display: none;
   }
 }
+
+
+/* JOIA opening sequence — one lightweight CSS intro per session. */
+.preloader {
+  position: fixed;
+  z-index: 240;
+  inset: 0;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at 50% 48%, rgba(255,255,255,.035), transparent 24rem),
+    #050505;
+  color: #f4efe6;
+  transform: translate3d(0,0,0);
+  will-change: transform;
+}
+
+.preloader::before,
+.preloader::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+}
+
+.preloader::before {
+  inset: 0;
+  opacity: .2;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0,
+      transparent calc(25% - 1px),
+      rgba(255,255,255,.08) 25%
+    );
+}
+
+.preloader::after {
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(180deg, transparent, rgba(255,255,255,.24), transparent);
+  transform: translateX(-50%);
+}
+
+.preloader[data-phase="exit"] {
+  animation: joiaIntroCurtain 600ms cubic-bezier(.76,0,.24,1) forwards;
+}
+
+.preloader[data-phase="exit"] .preloaderInner {
+  animation: joiaIntroInnerOut 300ms ease forwards;
+}
+
+.preloaderInner {
+  position: relative;
+  z-index: 2;
+  width: min(82vw, 31rem);
+  display: grid;
+  justify-items: center;
+  gap: 1rem;
+  text-align: center;
+}
+
+.preloaderEyebrow,
+.preloaderWorlds,
+.preloaderYear {
+  font-family: var(--font-night-mono), ui-monospace, monospace;
+  text-transform: uppercase;
+}
+
+.preloaderEyebrow {
+  font-size: .58rem;
+  letter-spacing: .2em;
+  opacity: 0;
+  animation: joiaIntroMeta 420ms ease 100ms forwards;
+}
+
+.preloaderLogo {
+  display: block;
+  width: min(68vw, 21rem);
+  height: clamp(4.8rem, 12vw, 7rem);
+  background-image: url("/media/brand/joia-logo.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 166% auto;
+  filter: invert(1);
+  opacity: 0;
+  transform: scale(.965);
+  animation: joiaIntroLogo 720ms cubic-bezier(.2,.75,.15,1) 160ms forwards;
+}
+
+.preloaderTrack {
+  width: min(58vw, 16rem);
+  height: 1px;
+  overflow: hidden;
+  background: rgba(255,255,255,.16);
+}
+
+.preloaderTrack span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: #f4efe6;
+  transform: scaleX(0);
+  transform-origin: left center;
+  animation: joiaIntroLoad 1250ms cubic-bezier(.65,0,.18,1) 180ms forwards;
+}
+
+.preloaderWorlds {
+  font-size: .54rem;
+  letter-spacing: .16em;
+  opacity: 0;
+  animation: joiaIntroMeta 420ms ease 720ms forwards;
+}
+
+.preloaderYear {
+  position: absolute;
+  z-index: 2;
+  left: max(1rem, env(safe-area-inset-left));
+  bottom: max(1rem, env(safe-area-inset-bottom));
+  font-size: .52rem;
+  letter-spacing: .16em;
+  opacity: .42;
+}
+
+@keyframes joiaIntroLogo {
+  from {
+    opacity: 0;
+    transform: scale(.965);
+    filter: invert(1) blur(5px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+    filter: invert(1) blur(0);
+  }
+}
+
+@keyframes joiaIntroMeta {
+  from {
+    opacity: 0;
+    transform: translate3d(0,.45rem,0);
+  }
+  to {
+    opacity: .68;
+    transform: translate3d(0,0,0);
+  }
+}
+
+@keyframes joiaIntroLoad {
+  0% { transform: scaleX(0); }
+  72% { transform: scaleX(.78); }
+  100% { transform: scaleX(1); }
+}
+
+@keyframes joiaIntroInnerOut {
+  to {
+    opacity: 0;
+    transform: translate3d(0,-.5rem,0);
+  }
+}
+
+@keyframes joiaIntroCurtain {
+  0% {
+    transform: translate3d(0,0,0);
+  }
+  100% {
+    transform: translate3d(0,-101%,0);
+  }
+}
+
+@media (max-width: 767px), (pointer: coarse) {
+  .preloader::before {
+    background:
+      repeating-linear-gradient(
+        90deg,
+        transparent 0,
+        transparent calc(50% - 1px),
+        rgba(255,255,255,.055) 50%
+      );
+  }
+
+  .preloaderLogo {
+    width: min(78vw, 18rem);
+    height: 5.6rem;
+  }
+
+  .preloaderTrack {
+    width: min(64vw, 14rem);
+  }
+
+  .preloaderEyebrow,
+  .preloaderWorlds {
+    font-size: .5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .preloaderLogo,
+  .preloaderTrack span,
+  .preloaderEyebrow,
+  .preloaderWorlds,
+  .preloader[data-phase="exit"],
+  .preloader[data-phase="exit"] .preloaderInner {
+    animation-duration: 1ms !important;
+    animation-delay: 0ms !important;
+  }
+}
